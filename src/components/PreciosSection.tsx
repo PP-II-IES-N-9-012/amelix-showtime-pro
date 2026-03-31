@@ -1,10 +1,13 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Check, Popcorn, Star } from "lucide-react";
+import { Check, Popcorn, Star, ShoppingCart, X, CreditCard } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 
 const precios = [
   {
     nombre: "General",
     precio: "$4.500",
+    precioNum: 4500,
     descripcion: "Entrada estándar",
     features: ["Sala estándar", "Audio Dolby", "Butaca regular"],
     destacado: false,
@@ -12,6 +15,7 @@ const precios = [
   {
     nombre: "IMAX",
     precio: "$6.500",
+    precioNum: 6500,
     descripcion: "La experiencia máxima",
     features: ["Pantalla gigante IMAX", "Audio inmersivo", "Butaca premium", "Gafas 3D incluidas"],
     destacado: true,
@@ -19,6 +23,7 @@ const precios = [
   {
     nombre: "Miércoles Popular",
     precio: "$2.800",
+    precioNum: 2800,
     descripcion: "Todos los miércoles",
     features: ["Todas las salas", "Audio Dolby", "Butaca regular"],
     destacado: false,
@@ -26,12 +31,66 @@ const precios = [
 ];
 
 const combos = [
-  { nombre: "Combo Individual", precio: "$3.200", items: "Pochoclos medianos + Gaseosa 500ml" },
-  { nombre: "Combo Pareja", precio: "$5.500", items: "Pochoclos grandes + 2 Gaseosas 500ml" },
-  { nombre: "Combo Familiar", precio: "$8.900", items: "2 Pochoclos grandes + 4 Gaseosas 500ml + Nachos" },
+  { nombre: "Combo Individual", precio: "$3.200", precioNum: 3200, items: "Pochoclos medianos + Gaseosa 500ml" },
+  { nombre: "Combo Pareja", precio: "$5.500", precioNum: 5500, items: "Pochoclos grandes + 2 Gaseosas 500ml" },
+  { nombre: "Combo Familiar", precio: "$8.900", precioNum: 8900, items: "2 Pochoclos grandes + 4 Gaseosas 500ml + Nachos" },
 ];
 
+interface CartItem {
+  nombre: string;
+  precio: string;
+  precioNum: number;
+  cantidad: number;
+  tipo: "entrada" | "combo";
+}
+
 const PreciosSection = () => {
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [showCheckout, setShowCheckout] = useState(false);
+  const [processing, setProcessing] = useState(false);
+
+  const addToCart = (nombre: string, precio: string, precioNum: number, tipo: "entrada" | "combo") => {
+    setCart((prev) => {
+      const existing = prev.find((item) => item.nombre === nombre);
+      if (existing) {
+        return prev.map((item) =>
+          item.nombre === nombre ? { ...item, cantidad: item.cantidad + 1 } : item
+        );
+      }
+      return [...prev, { nombre, precio, precioNum, cantidad: 1, tipo }];
+    });
+    toast({ title: `${nombre} agregado`, description: "Se añadió a tu carrito" });
+  };
+
+  const removeFromCart = (nombre: string) => {
+    setCart((prev) => prev.filter((item) => item.nombre !== nombre));
+  };
+
+  const updateQty = (nombre: string, delta: number) => {
+    setCart((prev) =>
+      prev
+        .map((item) =>
+          item.nombre === nombre ? { ...item, cantidad: Math.max(0, item.cantidad + delta) } : item
+        )
+        .filter((item) => item.cantidad > 0)
+    );
+  };
+
+  const total = cart.reduce((sum, item) => sum + item.precioNum * item.cantidad, 0);
+
+  const handlePay = () => {
+    setProcessing(true);
+    setTimeout(() => {
+      setProcessing(false);
+      setShowCheckout(false);
+      setCart([]);
+      toast({
+        title: "¡Compra exitosa! 🎬",
+        description: "Tu reserva fue confirmada. ¡Disfrutá la película!",
+      });
+    }, 2000);
+  };
+
   return (
     <section id="precios" className="py-20 bg-cinema-gradient">
       <div className="container mx-auto px-4">
@@ -80,6 +139,13 @@ const PreciosSection = () => {
                   </li>
                 ))}
               </ul>
+              <button
+                onClick={() => addToCart(plan.nombre, plan.precio, plan.precioNum, "entrada")}
+                className="mt-6 inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-3 rounded-lg font-heading uppercase tracking-wider text-sm font-semibold transition-all glow-red"
+              >
+                <ShoppingCart className="h-4 w-4" />
+                Comprar
+              </button>
             </motion.div>
           ))}
         </div>
@@ -104,11 +170,117 @@ const PreciosSection = () => {
               >
                 <h4 className="font-heading font-bold uppercase text-sm mb-1">{combo.nombre}</h4>
                 <p className="text-2xl font-heading font-bold text-gradient-gold mb-2">{combo.precio}</p>
-                <p className="text-xs text-muted-foreground">{combo.items}</p>
+                <p className="text-xs text-muted-foreground mb-4">{combo.items}</p>
+                <button
+                  onClick={() => addToCart(combo.nombre, combo.precio, combo.precioNum, "combo")}
+                  className="inline-flex items-center gap-2 border border-accent text-accent hover:bg-accent hover:text-accent-foreground px-4 py-2 rounded-lg font-heading uppercase tracking-wider text-xs font-semibold transition-all"
+                >
+                  <ShoppingCart className="h-3.5 w-3.5" />
+                  Agregar
+                </button>
               </div>
             ))}
           </div>
         </motion.div>
+
+        {/* Floating Cart Button */}
+        {cart.length > 0 && !showCheckout && (
+          <motion.button
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            onClick={() => setShowCheckout(true)}
+            className="fixed bottom-6 right-6 z-50 bg-primary text-primary-foreground p-4 rounded-full shadow-2xl glow-red flex items-center gap-2 font-heading uppercase tracking-wider text-sm font-semibold"
+          >
+            <ShoppingCart className="h-5 w-5" />
+            <span className="hidden sm:inline">Carrito</span>
+            <span className="bg-accent text-accent-foreground text-xs w-6 h-6 rounded-full flex items-center justify-center font-bold">
+              {cart.reduce((sum, item) => sum + item.cantidad, 0)}
+            </span>
+          </motion.button>
+        )}
+
+        {/* Checkout Modal */}
+        {showCheckout && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" onClick={() => setShowCheckout(false)} />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="relative bg-card border border-border rounded-xl w-full max-w-md p-6 shadow-2xl max-h-[80vh] overflow-y-auto"
+            >
+              <button
+                onClick={() => setShowCheckout(false)}
+                className="absolute top-4 right-4 text-muted-foreground hover:text-foreground"
+              >
+                <X className="h-5 w-5" />
+              </button>
+
+              <h3 className="text-xl font-heading font-bold uppercase mb-6 flex items-center gap-2">
+                <ShoppingCart className="h-5 w-5 text-primary" />
+                Tu Carrito
+              </h3>
+
+              {cart.length === 0 ? (
+                <p className="text-muted-foreground text-sm text-center py-8">Tu carrito está vacío</p>
+              ) : (
+                <>
+                  <div className="space-y-3 mb-6">
+                    {cart.map((item) => (
+                      <div key={item.nombre} className="flex items-center justify-between bg-muted/30 rounded-lg p-3">
+                        <div className="flex-1">
+                          <p className="text-sm font-medium">{item.nombre}</p>
+                          <p className="text-xs text-muted-foreground">{item.precio} c/u</p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => updateQty(item.nombre, -1)}
+                            className="w-7 h-7 rounded bg-muted flex items-center justify-center text-sm hover:bg-primary hover:text-primary-foreground transition-colors"
+                          >
+                            −
+                          </button>
+                          <span className="text-sm font-medium w-6 text-center">{item.cantidad}</span>
+                          <button
+                            onClick={() => updateQty(item.nombre, 1)}
+                            className="w-7 h-7 rounded bg-muted flex items-center justify-center text-sm hover:bg-primary hover:text-primary-foreground transition-colors"
+                          >
+                            +
+                          </button>
+                          <button
+                            onClick={() => removeFromCart(item.nombre)}
+                            className="ml-2 text-muted-foreground hover:text-destructive transition-colors"
+                          >
+                            <X className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="border-t border-border pt-4 mb-6">
+                    <div className="flex justify-between items-center">
+                      <span className="text-lg font-heading font-bold uppercase">Total</span>
+                      <span className="text-2xl font-heading font-bold text-gradient-gold">
+                        ${total.toLocaleString("es-AR")}
+                      </span>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={handlePay}
+                    disabled={processing}
+                    className="w-full inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-4 rounded-lg font-heading uppercase tracking-wider text-sm font-semibold transition-all glow-red disabled:opacity-50"
+                  >
+                    <CreditCard className="h-4 w-4" />
+                    {processing ? "Procesando pago..." : "Pagar ahora"}
+                  </button>
+                  <p className="text-xs text-muted-foreground text-center mt-3">
+                    Pago seguro • Aceptamos todas las tarjetas y Mercado Pago
+                  </p>
+                </>
+              )}
+            </motion.div>
+          </div>
+        )}
       </div>
     </section>
   );
