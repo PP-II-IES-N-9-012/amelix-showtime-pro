@@ -57,7 +57,9 @@ const FooterSection = () => {
               </a>
             </div>
             <p className="text-xs text-muted-foreground mt-6">
-              @amelixcinema
+              <a href="https://www.instagram.com/altosdelsol_sr" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">@altosdelsol_sr</a>
+              {" · "}
+              <a href="https://www.facebook.com/CineAmelix" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">/CineAmelix</a>
             </p>
           </div>
         </div>
