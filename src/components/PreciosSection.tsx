@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Check, Popcorn, Star, ShoppingCart, X, CreditCard } from "lucide-react";
+import { Check, Star, ShoppingCart, X, CreditCard } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
 const precios = [
@@ -30,11 +30,6 @@ const precios = [
   },
 ];
 
-const combos = [
-  { nombre: "Combo Individual", precio: "$3.200", precioNum: 3200, items: "Pochoclos medianos + Gaseosa 500ml" },
-  { nombre: "Combo Pareja", precio: "$5.500", precioNum: 5500, items: "Pochoclos grandes + 2 Gaseosas 500ml" },
-  { nombre: "Combo Familiar", precio: "$8.900", precioNum: 8900, items: "2 Pochoclos grandes + 4 Gaseosas 500ml + Nachos" },
-];
 
 interface CartItem {
   nombre: string;
@@ -150,38 +145,6 @@ const PreciosSection = () => {
           ))}
         </div>
 
-        {/* Combos */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          <div className="flex items-center justify-center gap-2 mb-8">
-            <Popcorn className="h-5 w-5 text-accent" />
-            <h3 className="text-2xl font-heading font-bold uppercase tracking-tight">
-              Combos Candy Bar
-            </h3>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
-            {combos.map((combo) => (
-              <div
-                key={combo.nombre}
-                className="bg-card border border-border rounded-lg p-5 text-center hover:border-accent/40 transition-colors"
-              >
-                <h4 className="font-heading font-bold uppercase text-sm mb-1">{combo.nombre}</h4>
-                <p className="text-2xl font-heading font-bold text-gradient-gold mb-2">{combo.precio}</p>
-                <p className="text-xs text-muted-foreground mb-4">{combo.items}</p>
-                <button
-                  onClick={() => addToCart(combo.nombre, combo.precio, combo.precioNum, "combo")}
-                  className="inline-flex items-center gap-2 border border-accent text-accent hover:bg-accent hover:text-accent-foreground px-4 py-2 rounded-lg font-heading uppercase tracking-wider text-xs font-semibold transition-all"
-                >
-                  <ShoppingCart className="h-3.5 w-3.5" />
-                  Agregar
-                </button>
-              </div>
-            ))}
-          </div>
-        </motion.div>
 
         {/* Floating Cart Button */}
         {cart.length > 0 && !showCheckout && (
