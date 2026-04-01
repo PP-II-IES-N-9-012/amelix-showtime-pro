@@ -28,7 +28,7 @@ const MapaSection = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 rounded-xl overflow-hidden border border-border glow-red">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26234.80474063429!2d-68.35!3d-34.6175!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x969637b3!2sSan+Rafael%2C+Mendoza!5e0!3m2!1ses-419!2sar!4v1"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3307.5!2d-68.3364!3d-34.6177!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sAv.+Gral.+Jos%C3%A9+de+San+Mart%C3%ADn+133%2C+San+Rafael!5e0!3m2!1ses-419!2sar!4v1"
                 width="100%"
                 height="400"
                 style={{ border: 0 }}
