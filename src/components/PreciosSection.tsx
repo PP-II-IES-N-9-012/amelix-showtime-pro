@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Check, Popcorn, Star, ShoppingCart, X, CreditCard } from "lucide-react";
+import { Check, Star, ShoppingCart, X, CreditCard } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
 const precios = [
