@@ -13,11 +13,11 @@ const precios = [
     destacado: false,
   },
   {
-    nombre: "IMAX",
-    precio: "$6.500",
-    precioNum: 6500,
-    descripcion: "La experiencia máxima",
-    features: ["Pantalla gigante IMAX", "Audio inmersivo", "Butaca premium", "Gafas 3D incluidas"],
+    nombre: "Premium",
+    precio: "$5.500",
+    precioNum: 5500,
+    descripcion: "Máxima comodidad",
+    features: ["Butaca premium reclinable", "Audio Dolby Surround", "Ubicación preferencial"],
     destacado: true,
   },
   {

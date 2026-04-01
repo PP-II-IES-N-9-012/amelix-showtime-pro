@@ -5,10 +5,10 @@ import gallery2 from "@/assets/gallery2.jpg";
 import gallery3 from "@/assets/gallery3.jpg";
 
 const stats = [
-  { icon: Film, value: "4", label: "Salas" },
-  { icon: Users, value: "800+", label: "Butacas" },
+  { icon: Film, value: "2", label: "Salas" },
+  { icon: Users, value: "400+", label: "Butacas" },
   { icon: Award, value: "10+", label: "Años de experiencia" },
-  { icon: Sparkles, value: "1", label: "Sala IMAX" },
+  { icon: Sparkles, value: "100%", label: "Dolby Audio" },
 ];
 
 const galeria = [
@@ -45,7 +45,7 @@ const NosotrosSection = () => {
               La mejor experiencia cinematográfica de <span className="text-primary">San Rafael</span>
             </h3>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              Desde hace más de una década, AMELIX Cinema es el punto de encuentro de los amantes del cine en San Rafael, Mendoza. Contamos con tecnología de última generación, pantallas IMAX, sonido Dolby Atmos y las butacas más cómodas de la región.
+              Desde hace más de una década, AMELIX Cinema es el punto de encuentro de los amantes del cine en San Rafael, Mendoza. Contamos con 2 salas equipadas con tecnología de última generación, sonido Dolby y las butacas más cómodas de la región.
             </p>
             <p className="text-muted-foreground leading-relaxed mb-8">
               Nuestro compromiso es brindarte una experiencia inolvidable. Desde el momento en que entrás a nuestro lobby hasta que se encienden las luces al final de la película, cada detalle está pensado para que disfrutes al máximo.
