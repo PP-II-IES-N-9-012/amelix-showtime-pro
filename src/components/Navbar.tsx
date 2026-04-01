@@ -5,6 +5,7 @@ import amelixLogo from "@/assets/amelix-logo.png";
 const navLinks = [
   { label: "Cartelera", href: "#cartelera" },
   { label: "Próximamente", href: "#proximamente" },
+  { label: "Candy Bar", href: "#candybar" },
   { label: "Nosotros", href: "#nosotros" },
   { label: "Precios", href: "#precios" },
   { label: "Ubicación", href: "#ubicacion" },
