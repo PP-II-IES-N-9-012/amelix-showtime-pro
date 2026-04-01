@@ -47,7 +47,7 @@ const MapaSection = () => {
                   <h3 className="font-heading font-bold uppercase text-sm">Dirección</h3>
                 </div>
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  Av. Hipólito Yrigoyen 1234<br />
+                  Av. Gral. José de San Martín 133<br />
                   San Rafael, Mendoza<br />
                   Argentina (CP 5600)
                 </p>
