@@ -13,16 +13,8 @@ const faqs = [
     respuesta: "Sí, podés reservar tus entradas directamente desde nuestra página web o acercándote a boletería. Las reservas online se mantienen hasta 30 minutos antes de la función.",
   },
   {
-    pregunta: "¿Hay descuentos para estudiantes o jubilados?",
-    respuesta: "Sí. Estudiantes y jubilados tienen un 20% de descuento presentando credencial vigente (excepto estrenos y miércoles popular).",
-  },
-  {
     pregunta: "¿Se permite ingresar con alimentos externos?",
     respuesta: "No se permite el ingreso con alimentos o bebidas externos. Nuestro Candy Bar ofrece una amplia variedad de combos a precios accesibles.",
-  },
-  {
-    pregunta: "¿Las salas tienen accesibilidad para personas con discapacidad?",
-    respuesta: "Sí, todas nuestras salas cuentan con acceso para personas con movilidad reducida, espacios reservados y sistema de audio asistido.",
   },
   {
     pregunta: "¿Se puede realizar cumpleaños o eventos privados?",
