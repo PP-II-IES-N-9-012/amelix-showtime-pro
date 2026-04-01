@@ -5,10 +5,10 @@ import gallery2 from "@/assets/gallery2.jpg";
 import gallery3 from "@/assets/gallery3.jpg";
 
 const stats = [
-  { icon: Film, value: "4", label: "Salas" },
-  { icon: Users, value: "800+", label: "Butacas" },
+  { icon: Film, value: "2", label: "Salas" },
+  { icon: Users, value: "400+", label: "Butacas" },
   { icon: Award, value: "10+", label: "Años de experiencia" },
-  { icon: Sparkles, value: "1", label: "Sala IMAX" },
+  { icon: Sparkles, value: "100%", label: "Dolby Audio" },
 ];
 
 const galeria = [
