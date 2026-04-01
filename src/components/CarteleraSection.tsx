@@ -14,7 +14,7 @@ const peliculas = [
     rating: 8.2,
     imagen: movie1,
     horarios: ["14:30", "17:00", "19:30", "22:00"],
-    sala: "Sala 1 - IMAX",
+    sala: "Sala 1",
     idioma: "Subtitulada",
   },
   {
