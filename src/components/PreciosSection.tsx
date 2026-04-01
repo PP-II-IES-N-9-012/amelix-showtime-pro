@@ -30,11 +30,6 @@ const precios = [
   },
 ];
 
-const combos = [
-  { nombre: "Combo Individual", precio: "$3.200", precioNum: 3200, items: "Pochoclos medianos + Gaseosa 500ml" },
-  { nombre: "Combo Pareja", precio: "$5.500", precioNum: 5500, items: "Pochoclos grandes + 2 Gaseosas 500ml" },
-  { nombre: "Combo Familiar", precio: "$8.900", precioNum: 8900, items: "2 Pochoclos grandes + 4 Gaseosas 500ml + Nachos" },
-];
 
 interface CartItem {
   nombre: string;
