@@ -40,20 +40,26 @@ const FooterSection = () => {
             </h4>
             <div className="flex gap-3">
               <a
-                href="#"
+                href="https://www.instagram.com/altosdelsol_sr"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
               >
                 <Instagram className="h-5 w-5" />
               </a>
               <a
-                href="#"
+                href="https://www.facebook.com/CineAmelix"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
               >
                 <Facebook className="h-5 w-5" />
               </a>
             </div>
             <p className="text-xs text-muted-foreground mt-6">
-              @amelixcinema
+              <a href="https://www.instagram.com/altosdelsol_sr" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">@altosdelsol_sr</a>
+              {" · "}
+              <a href="https://www.facebook.com/CineAmelix" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">/CineAmelix</a>
             </p>
           </div>
         </div>
