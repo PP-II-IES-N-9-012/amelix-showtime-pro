@@ -25,7 +25,7 @@ const FooterSection = () => {
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="h-4 w-4 text-primary flex-shrink-0" />
-                <span>(0260) 442-1234</span>
+                <span>(0260) 442-7171</span>
               </li>
               <li className="flex items-start gap-2">
                 <Clock className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />

@@ -36,7 +36,7 @@ const peliculas = [
     rating: 8.8,
     imagen: movie3,
     horarios: ["13:00", "15:30", "17:45"],
-    sala: "Sala 3",
+    sala: "Sala 1",
     idioma: "Doblada",
   },
   {
@@ -47,7 +47,7 @@ const peliculas = [
     rating: 7.1,
     imagen: movie4,
     horarios: ["20:30", "22:45"],
-    sala: "Sala 4",
+    sala: "Sala 2",
     idioma: "Subtitulada",
   },
 ];

@@ -66,7 +66,7 @@ const MapaSection = () => {
               </div>
 
               <a
-                href="https://www.google.com/maps/dir//San+Rafael,+Mendoza"
+                href="https://www.google.com/maps/dir//Av.+Gral.+Jos%C3%A9+de+San+Mart%C3%ADn+133,+San+Rafael,+Mendoza"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-3 rounded-lg font-heading uppercase tracking-wider text-sm font-semibold transition-all glow-red"
