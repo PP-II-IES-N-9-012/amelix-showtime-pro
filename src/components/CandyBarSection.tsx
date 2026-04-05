@@ -1,39 +1,5 @@
 import { motion } from "framer-motion";
-import { Popcorn, CupSoda, Cookie, IceCreamCone, ShoppingCart } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
-
-const categorias = [
-  {
-    nombre: "Pochoclos",
-    icono: Popcorn,
-    items: [
-      { nombre: "Pochoclos Chicos", precio: "$1.800", descripcion: "Balde chico de pochoclos salados o dulces" },
-      { nombre: "Pochoclos Medianos", precio: "$2.500", descripcion: "Balde mediano de pochoclos salados o dulces" },
-      { nombre: "Pochoclos Grandes", precio: "$3.200", descripcion: "Balde grande de pochoclos salados o dulces" },
-      { nombre: "Pochoclos Mix", precio: "$3.500", descripcion: "Balde grande mitad salados, mitad dulces" },
-    ],
-  },
-  {
-    nombre: "Bebidas",
-    icono: CupSoda,
-    items: [
-      { nombre: "Gaseosa 500ml", precio: "$1.200", descripcion: "Coca-Cola, Sprite, Fanta" },
-      { nombre: "Gaseosa 750ml", precio: "$1.800", descripcion: "Coca-Cola, Sprite, Fanta" },
-      { nombre: "Agua mineral 500ml", precio: "$900", descripcion: "Con o sin gas" },
-      { nombre: "Jugo del Valle 500ml", precio: "$1.100", descripcion: "Naranja, Manzana, Durazno" },
-    ],
-  },
-  {
-    nombre: "Snacks",
-    icono: Cookie,
-    items: [
-      { nombre: "Nachos con queso", precio: "$2.800", descripcion: "Nachos crujientes con salsa cheddar" },
-      { nombre: "Hot Dog", precio: "$2.200", descripcion: "Pancho con mostaza y ketchup" },
-      { nombre: "Chocolatín", precio: "$800", descripcion: "Shot, Cofler o Milka" },
-      { nombre: "Gomitas", precio: "$700", descripcion: "Bolsa de gomitas surtidas" },
-    ],
-  },
-];
+import { IceCreamCone } from "lucide-react";
 
 const combos = [
   {
