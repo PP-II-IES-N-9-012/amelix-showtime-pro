@@ -51,9 +51,22 @@ const HeroSection = () => {
           <p className="text-xl md:text-2xl font-heading uppercase tracking-[0.3em] text-muted-foreground mb-2">
             Cinema
           </p>
-          <p className="text-base md:text-lg text-muted-foreground mb-10 max-w-lg mx-auto font-light">
+          <p className="text-base md:text-lg text-muted-foreground mb-6 max-w-lg mx-auto font-light">
             La mejor experiencia cinematográfica de San Rafael, Mendoza
           </p>
+          <div className="flex items-center justify-center gap-2 mb-8">
+            <span className={`w-2.5 h-2.5 rounded-full ${boleteriaAbierta ? "bg-green-500 animate-pulse" : "bg-red-500"}`} />
+            <span className="text-sm font-heading uppercase tracking-wider">
+              Boletería: {boleteriaAbierta ? (
+                <span className="text-green-400 font-semibold">Abierta ahora</span>
+              ) : (
+                <span className="text-red-400 font-semibold">Cerrada</span>
+              )}
+            </span>
+            <span className="text-xs text-muted-foreground ml-2">
+              (Lun: cerrado · Mar a Dom: 18:00 hs)
+            </span>
+          </div>
         </motion.div>
 
         <motion.div

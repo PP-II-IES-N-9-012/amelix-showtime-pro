@@ -101,44 +101,9 @@ const CandyBarSection = () => {
           </div>
         </motion.div>
 
-        {/* Menú por categoría */}
-        <div className="space-y-12 max-w-5xl mx-auto">
-          {categorias.map((cat, ci) => (
-            <motion.div
-              key={cat.nombre}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: ci * 0.1 }}
-            >
-              <div className="flex items-center gap-3 mb-5">
-                <cat.icono className="h-5 w-5 text-accent" />
-                <h3 className="text-xl font-heading font-bold uppercase tracking-tight">
-                  {cat.nombre}
-                </h3>
-                <div className="flex-1 h-px bg-border" />
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {cat.items.map((item) => (
-                  <div
-                    key={item.nombre}
-                    className="bg-card border border-border rounded-lg p-4 flex items-center justify-between hover:border-accent/30 transition-colors"
-                  >
-                    <div>
-                      <h4 className="text-sm font-heading font-semibold uppercase">
-                        {item.nombre}
-                      </h4>
-                      <p className="text-xs text-muted-foreground">{item.descripcion}</p>
-                    </div>
-                    <span className="text-lg font-heading font-bold text-gradient-gold ml-4 flex-shrink-0">
-                      {item.precio}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        <p className="text-center text-sm text-muted-foreground mt-8">
+          Además ofrecemos una amplia variedad de snacks, bebidas y golosinas. ¡Consultá en nuestro Candy Bar!
+        </p>
       </div>
     </section>
   );

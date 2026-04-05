@@ -64,7 +64,8 @@ const FooterSection = () => {
           </div>
         </div>
 
-        <div className="border-t border-border mt-12 pt-8 text-center text-xs text-muted-foreground">
+        <div className="border-t border-border mt-12 pt-8 text-center text-xs text-muted-foreground space-y-2">
+          <p className="font-semibold text-foreground/80">⚠️ No se aceptan cambios ni devoluciones una vez retirada la entrada.</p>
           <p>© 2026 AMELIX Cinema — San Rafael, Mendoza. Todos los derechos reservados.</p>
         </div>
       </div>
