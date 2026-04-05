@@ -1,39 +1,5 @@
 import { motion } from "framer-motion";
-import { Popcorn, CupSoda, Cookie, IceCreamCone, ShoppingCart } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
-
-const categorias = [
-  {
-    nombre: "Pochoclos",
-    icono: Popcorn,
-    items: [
-      { nombre: "Pochoclos Chicos", precio: "$1.800", descripcion: "Balde chico de pochoclos salados o dulces" },
-      { nombre: "Pochoclos Medianos", precio: "$2.500", descripcion: "Balde mediano de pochoclos salados o dulces" },
-      { nombre: "Pochoclos Grandes", precio: "$3.200", descripcion: "Balde grande de pochoclos salados o dulces" },
-      { nombre: "Pochoclos Mix", precio: "$3.500", descripcion: "Balde grande mitad salados, mitad dulces" },
-    ],
-  },
-  {
-    nombre: "Bebidas",
-    icono: CupSoda,
-    items: [
-      { nombre: "Gaseosa 500ml", precio: "$1.200", descripcion: "Coca-Cola, Sprite, Fanta" },
-      { nombre: "Gaseosa 750ml", precio: "$1.800", descripcion: "Coca-Cola, Sprite, Fanta" },
-      { nombre: "Agua mineral 500ml", precio: "$900", descripcion: "Con o sin gas" },
-      { nombre: "Jugo del Valle 500ml", precio: "$1.100", descripcion: "Naranja, Manzana, Durazno" },
-    ],
-  },
-  {
-    nombre: "Snacks",
-    icono: Cookie,
-    items: [
-      { nombre: "Nachos con queso", precio: "$2.800", descripcion: "Nachos crujientes con salsa cheddar" },
-      { nombre: "Hot Dog", precio: "$2.200", descripcion: "Pancho con mostaza y ketchup" },
-      { nombre: "Chocolatín", precio: "$800", descripcion: "Shot, Cofler o Milka" },
-      { nombre: "Gomitas", precio: "$700", descripcion: "Bolsa de gomitas surtidas" },
-    ],
-  },
-];
+import { IceCreamCone } from "lucide-react";
 
 const combos = [
   {
@@ -135,44 +101,9 @@ const CandyBarSection = () => {
           </div>
         </motion.div>
 
-        {/* Menú por categoría */}
-        <div className="space-y-12 max-w-5xl mx-auto">
-          {categorias.map((cat, ci) => (
-            <motion.div
-              key={cat.nombre}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: ci * 0.1 }}
-            >
-              <div className="flex items-center gap-3 mb-5">
-                <cat.icono className="h-5 w-5 text-accent" />
-                <h3 className="text-xl font-heading font-bold uppercase tracking-tight">
-                  {cat.nombre}
-                </h3>
-                <div className="flex-1 h-px bg-border" />
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {cat.items.map((item) => (
-                  <div
-                    key={item.nombre}
-                    className="bg-card border border-border rounded-lg p-4 flex items-center justify-between hover:border-accent/30 transition-colors"
-                  >
-                    <div>
-                      <h4 className="text-sm font-heading font-semibold uppercase">
-                        {item.nombre}
-                      </h4>
-                      <p className="text-xs text-muted-foreground">{item.descripcion}</p>
-                    </div>
-                    <span className="text-lg font-heading font-bold text-gradient-gold ml-4 flex-shrink-0">
-                      {item.precio}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        <p className="text-center text-sm text-muted-foreground mt-8">
+          Además ofrecemos una amplia variedad de snacks, bebidas y golosinas. ¡Consultá en nuestro Candy Bar!
+        </p>
       </div>
     </section>
   );

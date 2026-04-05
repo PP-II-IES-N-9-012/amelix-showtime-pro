@@ -57,6 +57,28 @@ const ContactoFaqSection = () => {
           </p>
         </motion.div>
 
+        {/* Contacto Empresas */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="max-w-2xl mx-auto mb-12 bg-card border border-accent/30 rounded-xl p-6 text-center"
+        >
+          <h3 className="text-lg font-heading font-bold uppercase tracking-wider mb-2">
+            Contacto para Empresas
+          </h3>
+          <p className="text-sm text-muted-foreground mb-3">
+            ¿Querés publicitar en nuestras salas? Escribinos para conocer las opciones de pauta publicitaria.
+          </p>
+          <a
+            href="mailto:cineamelix.publi@gmail.com"
+            className="inline-flex items-center gap-2 text-accent hover:text-accent/80 font-semibold text-sm transition-colors"
+          >
+            <Send className="h-4 w-4" />
+            cineamelix.publi@gmail.com
+          </a>
+        </motion.div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
           {/* Formulario */}
           <motion.div
