@@ -1,11 +1,27 @@
-import { motion } from "framer-motion";
-import { Clock, Star, Calendar } from "lucide-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Clock, Star, Calendar, X, Film, Users } from "lucide-react";
 import movie1 from "@/assets/movie1.jpg";
 import movie2 from "@/assets/movie2.jpg";
 import movie3 from "@/assets/movie3.jpg";
 import movie4 from "@/assets/movie4.jpg";
 
-const peliculas = [
+type Pelicula = {
+  titulo: string;
+  genero: string;
+  duracion: string;
+  clasificacion: string;
+  rating: number;
+  imagen: string;
+  horarios: string[];
+  sala: string;
+  idioma: string;
+  descripcion: string;
+  reparto: string;
+  director: string;
+};
+
+const peliculas: Pelicula[] = [
   {
     titulo: "Sombras del Pasado",
     genero: "Thriller / Suspenso",
@@ -16,6 +32,9 @@ const peliculas = [
     horarios: ["14:30", "17:00", "19:30", "22:00"],
     sala: "Sala 1",
     idioma: "Subtitulada",
+    descripcion: "Un detective veterano se enfrenta al caso más oscuro de su carrera cuando un inteligente asesino en serie reaparece después de 20 años, dejándole pistas macabras en cada escena del crimen.",
+    reparto: "Ricardo Darín, Guillermo Francella, Soledad Villamil",
+    director: "Juan José Campanella"
   },
   {
     titulo: "Un Amor en París",
@@ -27,6 +46,9 @@ const peliculas = [
     horarios: ["15:00", "17:30", "20:00"],
     sala: "Sala 2",
     idioma: "Doblada",
+    descripcion: "Dos perfectos desconocidos se encuentran por accidente en las mágicas calles de París y viven un romance efímero que cambiará el rumbo de sus vidas para siempre.",
+    reparto: "Audrey Tautou, Romain Duris",
+    director: "Jean-Pierre Jeunet"
   },
   {
     titulo: "El Mundo Mágico",
@@ -38,6 +60,9 @@ const peliculas = [
     horarios: ["13:00", "15:30", "17:45"],
     sala: "Sala 1",
     idioma: "Doblada",
+    descripcion: "Una curiosa joven descubre un portal a un reino asombroso, donde criaturas fantásticas y seres míticos necesitan desesperadamente su ayuda para salvar su mundo de la oscuridad.",
+    reparto: "Voces de: Anya Taylor-Joy, Jack Black, Tom Holland",
+    director: "Hayao Miyazaki"
   },
   {
     titulo: "El Bosque Oscuro",
@@ -49,12 +74,17 @@ const peliculas = [
     horarios: ["20:30", "22:45"],
     sala: "Sala 2",
     idioma: "Subtitulada",
+    descripcion: "Un grupo de amigos decide acampar en un bosque remoto rodeado de leyendas locales, solo para despertar a una antigua e implacable entidad que los cazará uno por uno.",
+    reparto: "Florence Pugh, Bill Skarsgård, Mia Goth",
+    director: "Ari Aster"
   },
 ];
 
 const CarteleraSection = () => {
+  const [selectedMovie, setSelectedMovie] = useState<Pelicula | null>(null);
+
   return (
-    <section id="cartelera" className="py-20 bg-cinema-gradient">
+    <section id="cartelera" className="py-20 bg-cinema-gradient relative">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -79,7 +109,8 @@ const CarteleraSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="bg-card rounded-xl overflow-hidden border border-border hover:border-primary/30 transition-all group"
+              className="bg-card rounded-xl overflow-hidden border border-border hover:border-primary/30 transition-all group cursor-pointer"
+              onClick={() => setSelectedMovie(peli)}
             >
               <div className="flex flex-col sm:flex-row">
                 <div className="sm:w-48 h-64 sm:h-auto flex-shrink-0 overflow-hidden">
@@ -124,7 +155,8 @@ const CarteleraSection = () => {
                       {peli.horarios.map((h) => (
                         <button
                           key={h}
-                          className="px-3 py-1.5 text-sm font-medium bg-muted hover:bg-primary hover:text-primary-foreground rounded-md transition-colors border border-border hover:border-primary"
+                          onClick={(e) => e.stopPropagation()}
+                          className="px-3 py-1.5 text-sm font-medium bg-muted hover:bg-primary hover:text-primary-foreground rounded-md transition-colors border border-border hover:border-primary cursor-default"
                         >
                           {h}
                         </button>
@@ -137,6 +169,86 @@ const CarteleraSection = () => {
           ))}
         </div>
       </div>
+
+      {/* Modal / Overlay de detalles */}
+      <AnimatePresence>
+        {selectedMovie && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedMovie(null)}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-3xl bg-card border border-border rounded-xl shadow-2xl overflow-hidden flex flex-col md:flex-row"
+            >
+              <button
+                onClick={() => setSelectedMovie(null)}
+                className="absolute top-3 right-3 z-10 p-2 bg-background/80 hover:bg-background text-foreground rounded-full backdrop-blur-md transition-colors shadow-sm"
+              >
+                <X className="w-5 h-5" />
+              </button>
+              
+              <div className="md:w-2/5 h-64 md:h-auto overflow-hidden relative">
+                <img 
+                  src={selectedMovie.imagen} 
+                  alt={selectedMovie.titulo}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent md:hidden" />
+              </div>
+              
+              <div className="p-6 md:p-8 md:w-3/5 flex flex-col justify-center">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-xs font-semibold bg-primary/20 text-primary px-2 py-1 rounded">
+                    {selectedMovie.clasificacion}
+                  </span>
+                  <span className="flex items-center gap-1 text-xs text-muted-foreground mr-3">
+                    <Clock className="h-3 w-3" /> {selectedMovie.duracion}
+                  </span>
+                  <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                    <Star className="h-3 w-3 text-accent" /> {selectedMovie.rating}
+                  </span>
+                </div>
+                
+                <h3 className="text-2xl md:text-3xl font-heading font-bold uppercase mb-2">
+                  <span className="text-gradient-gold">{selectedMovie.titulo}</span>
+                </h3>
+                
+                <p className="text-sm text-primary mb-6 font-medium">
+                  {selectedMovie.genero} • {selectedMovie.idioma}
+                </p>
+                
+                <p className="text-sm text-foreground/80 mb-8 leading-relaxed">
+                  {selectedMovie.descripcion}
+                </p>
+                
+                <div className="space-y-4 text-sm mt-auto bg-muted/30 p-4 rounded-lg border border-border/50">
+                  <div className="flex items-start gap-3">
+                    <Film className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                    <div>
+                      <span className="font-semibold block text-foreground/90 uppercase text-xs tracking-wider mb-1">Director</span>
+                      <span className="text-muted-foreground">{selectedMovie.director}</span>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Users className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                    <div>
+                      <span className="font-semibold block text-foreground/90 uppercase text-xs tracking-wider mb-1">Reparto Principal</span>
+                      <span className="text-muted-foreground">{selectedMovie.reparto}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
