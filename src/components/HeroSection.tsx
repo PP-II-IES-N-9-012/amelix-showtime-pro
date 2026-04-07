@@ -64,7 +64,7 @@ const HeroSection = () => {
               )}
             </span>
             <span className="text-xs text-muted-foreground ml-2">
-              (Lun: cerrado · Mar a Dom: de 18:00 hs a 00:00 hs)
+              (Lun: cerrado · Mar a Dom: de 17:30 hs a 00:00 hs)
             </span>
           </div>
         </motion.div>
