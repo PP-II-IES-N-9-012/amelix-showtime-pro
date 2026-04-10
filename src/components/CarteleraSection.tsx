@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Clock, Star, Calendar, X, Film, Users } from "lucide-react";
+import { Clock, Star, Calendar, X, Film, Users, PlayCircle } from "lucide-react";
 import movie1 from "@/assets/movie1.jpg";
 import movie2 from "@/assets/movie2.jpg";
 import movie3 from "@/assets/movie3.jpg";
@@ -19,6 +19,7 @@ type Pelicula = {
   descripcion: string;
   reparto: string;
   director: string;
+  trailerUrl: string;
 };
 
 const peliculas: Pelicula[] = [
@@ -34,7 +35,8 @@ const peliculas: Pelicula[] = [
     idioma: "Subtitulada",
     descripcion: "Un detective veterano se enfrenta al caso más oscuro de su carrera cuando un inteligente asesino en serie reaparece después de 20 años, dejándole pistas macabras en cada escena del crimen.",
     reparto: "Ricardo Darín, Guillermo Francella, Soledad Villamil",
-    director: "Juan José Campanella"
+    director: "Juan José Campanella",
+    trailerUrl: "https://www.youtube.com/embed/s2Y9jV9xoxI"
   },
   {
     titulo: "Un Amor en París",
@@ -48,7 +50,8 @@ const peliculas: Pelicula[] = [
     idioma: "Doblada",
     descripcion: "Dos perfectos desconocidos se encuentran por accidente en las mágicas calles de París y viven un romance efímero que cambiará el rumbo de sus vidas para siempre.",
     reparto: "Audrey Tautou, Romain Duris",
-    director: "Jean-Pierre Jeunet"
+    director: "Jean-Pierre Jeunet",
+    trailerUrl: "https://www.youtube.com/embed/H74CGZl6Yhw"
   },
   {
     titulo: "El Mundo Mágico",
@@ -62,7 +65,8 @@ const peliculas: Pelicula[] = [
     idioma: "Doblada",
     descripcion: "Una curiosa joven descubre un portal a un reino asombroso, donde criaturas fantásticas y seres míticos necesitan desesperadamente su ayuda para salvar su mundo de la oscuridad.",
     reparto: "Voces de: Anya Taylor-Joy, Jack Black, Tom Holland",
-    director: "Hayao Miyazaki"
+    director: "Hayao Miyazaki",
+    trailerUrl: "https://www.youtube.com/embed/ByXuk9QqQkk"
   },
   {
     titulo: "El Bosque Oscuro",
@@ -76,12 +80,14 @@ const peliculas: Pelicula[] = [
     idioma: "Subtitulada",
     descripcion: "Un grupo de amigos decide acampar en un bosque remoto rodeado de leyendas locales, solo para despertar a una antigua e implacable entidad que los cazará uno por uno.",
     reparto: "Florence Pugh, Bill Skarsgård, Mia Goth",
-    director: "Ari Aster"
+    director: "Ari Aster",
+    trailerUrl: "https://www.youtube.com/embed/1Vnghdsjmd0"
   },
 ];
 
 const CarteleraSection = () => {
   const [selectedMovie, setSelectedMovie] = useState<Pelicula | null>(null);
+  const [selectedTrailer, setSelectedTrailer] = useState<string | null>(null);
 
   return (
     <section id="cartelera" className="py-20 bg-cinema-gradient relative">
@@ -194,13 +200,24 @@ const CarteleraSection = () => {
                 <X className="w-5 h-5" />
               </button>
               
-              <div className="md:w-2/5 h-64 md:h-auto overflow-hidden relative">
+              <div className="md:w-2/5 h-64 md:h-auto overflow-hidden relative group">
                 <img 
                   src={selectedMovie.imagen} 
                   alt={selectedMovie.titulo}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent md:hidden" />
+                
+                <div 
+                  className="absolute inset-0 bg-black/20 group-hover:bg-black/50 transition-colors duration-300 md:bg-transparent md:group-hover:bg-black/40 flex items-center justify-center cursor-pointer z-10"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedTrailer(selectedMovie.trailerUrl);
+                  }}
+                >
+                  <PlayCircle className="w-16 h-16 text-white/80 group-hover:text-white group-hover:scale-110 transition-all duration-300 drop-shadow-[0_0_15px_rgba(0,0,0,0.5)]" />
+                </div>
+
+                <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent pointer-events-none md:hidden z-0" />
               </div>
               
               <div className="p-6 md:p-8 md:w-3/5 flex flex-col justify-center">
@@ -245,6 +262,43 @@ const CarteleraSection = () => {
                   </div>
                 </div>
               </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Modal del trailer */}
+      <AnimatePresence>
+        {selectedTrailer && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedTrailer(null)}
+            className="fixed inset-0 z-[60] flex items-center justify-center p-4 lg:p-12 bg-background/95 backdrop-blur-md"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-5xl aspect-video bg-black rounded-xl overflow-hidden shadow-2xl border border-border"
+            >
+              <button
+                onClick={() => setSelectedTrailer(null)}
+                className="absolute top-2 right-2 md:top-4 md:right-4 z-10 p-2 bg-background/50 hover:bg-background/90 text-white rounded-full backdrop-blur-md transition-colors shadow-sm"
+              >
+                <X className="w-5 h-5 md:w-6 md:h-6" />
+              </button>
+              
+              <iframe
+                className="w-full h-full"
+                src={`${selectedTrailer}?autoplay=1`}
+                title="Trailer de la película"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              ></iframe>
             </motion.div>
           </motion.div>
         )}
