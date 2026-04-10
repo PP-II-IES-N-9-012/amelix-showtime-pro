@@ -61,6 +61,7 @@ const PromocionesCarouselSection = () => {
           className="w-full max-w-6xl mx-auto"
         >
           <Carousel
+            opts={{ loop: true }}
             plugins={[plugin.current]}
             className="w-full relative shadow-2xl rounded-2xl group"
             onMouseEnter={plugin.current.stop}
