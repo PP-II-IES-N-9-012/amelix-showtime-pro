@@ -18,31 +18,31 @@ import movie1 from "@/assets/movie1.jpg";
 const promociones = [
   {
     id: 1,
-    title: "¡2x1 en Entradas los Martes!",
-    description: "Vení con un amigo y pagá una sola entrada en todas las funciones 2D.",
+    title: "¡Muy feliz Semana Santa!",
+    description: "Les deseamos el equipo de Cine Amelix. Gracias por acompañarnos y disfrutar en familia.",
     image: promo1,
     type: "promo",
   },
   {
     id: 2,
-    title: "Estreno Exclusivo: Sombras del Pasado",
-    description: "No te pierdas el thriller del año. Ya en cartelera.",
-    image: movie1, // We'll use object-cover to make it rectangular
+    title: "Próximamente: La Casaca de Dios",
+    description: "Gran estreno el 9 de Abril. Una historia atrapante que no te puedes perder.",
+    image: promo3,
     type: "destacada",
   },
   {
     id: 3,
-    title: "Combo Familia: 30% OFF en Candy Bar",
-    description: "Disfrutá más pagando menos. Válido para pochoclos grandes y 4 bebidas.",
-    image: promo3,
-    type: "promo",
+    title: "Próximamente: 911 Llamada Infernal",
+    description: "Gran estreno el 9 de Abril. Prepárate para el thriller de acción del año en Cine Amelix.",
+    image: promo2,
+    type: "destacada",
   },
   {
     id: 4,
     title: "Experiencia AMELIX Premium",
-    description: "Descubrí nuestras nuevas salas con sonido envolvente Dolby Atmos.",
-    image: promo2,
-    type: "destacada",
+    description: "Descubrí nuestras nuevas salas con sonido envolvente y la mejor calidad de imagen.",
+    image: movie1,
+    type: "promo",
   },
 ];
 

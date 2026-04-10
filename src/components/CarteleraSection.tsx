@@ -24,64 +24,64 @@ type Pelicula = {
 
 const peliculas: Pelicula[] = [
   {
-    titulo: "Sombras del Pasado",
-    genero: "Thriller / Suspenso",
-    duracion: "2h 15min",
-    clasificacion: "+16",
-    rating: 8.2,
+    titulo: "Te van a matar",
+    genero: "Terror / Comedia / Acción",
+    duracion: "1:50 hs",
+    clasificacion: "SAM 16",
+    rating: 8.5,
     imagen: movie1,
-    horarios: ["14:30", "17:00", "19:30", "22:00"],
+    horarios: ["20:30 hs (Vier y Dom Subt.)"],
     sala: "Sala 1",
-    idioma: "Subtitulada",
-    descripcion: "Un detective veterano se enfrenta al caso más oscuro de su carrera cuando un inteligente asesino en serie reaparece después de 20 años, dejándole pistas macabras en cada escena del crimen.",
-    reparto: "Ricardo Darín, Guillermo Francella, Soledad Villamil",
-    director: "Juan José Campanella",
-    trailerUrl: "https://www.youtube.com/embed/s2Y9jV9xoxI"
+    idioma: "Latino y Subtitulado",
+    descripcion: "Una comedia de terror imperdible. No te pierdas esta increíble película.",
+    reparto: "No disponible",
+    director: "No disponible",
+    trailerUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
   },
   {
-    titulo: "Un Amor en París",
-    genero: "Comedia Romántica",
-    duracion: "1h 50min",
+    titulo: "Hoppers: Operación Castor",
+    genero: "Infantil / Familiar / Animación",
+    duracion: "2:00 hs",
     clasificacion: "ATP",
-    rating: 7.5,
+    rating: 7.8,
     imagen: movie2,
-    horarios: ["15:00", "17:30", "20:00"],
+    horarios: ["18:15 hs"],
     sala: "Sala 2",
-    idioma: "Doblada",
-    descripcion: "Dos perfectos desconocidos se encuentran por accidente en las mágicas calles de París y viven un romance efímero que cambiará el rumbo de sus vidas para siempre.",
-    reparto: "Audrey Tautou, Romain Duris",
-    director: "Jean-Pierre Jeunet",
-    trailerUrl: "https://www.youtube.com/embed/H74CGZl6Yhw"
+    idioma: "Latino y Subtitulado",
+    descripcion: "Una divertida aventura animada para toda la familia donde un grupo de animales deberá trabajar en equipo.",
+    reparto: "Voces Originales",
+    director: "Animación",
+    trailerUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
   },
   {
-    titulo: "El Mundo Mágico",
-    genero: "Animación / Aventura",
-    duracion: "1h 40min",
-    clasificacion: "ATP",
-    rating: 8.8,
+    titulo: "Proyecto fin del mundo",
+    genero: "Ciencia Ficción",
+    duracion: "2:45 hs",
+    clasificacion: "SAM 13",
+    rating: 8.2,
     imagen: movie3,
-    horarios: ["13:00", "15:30", "17:45"],
+    horarios: ["22:10 hs (Jue y Sáb Subt.)"],
     sala: "Sala 1",
-    idioma: "Doblada",
-    descripcion: "Una curiosa joven descubre un portal a un reino asombroso, donde criaturas fantásticas y seres míticos necesitan desesperadamente su ayuda para salvar su mundo de la oscuridad.",
-    reparto: "Voces de: Anya Taylor-Joy, Jack Black, Tom Holland",
-    director: "Hayao Miyazaki",
-    trailerUrl: "https://www.youtube.com/embed/ByXuk9QqQkk"
+    idioma: "Latino y Subtitulado",
+    descripcion: "La humanidad se enfrenta a su mayor desafío cuando un experimento científico desencadena eventos cataclísmicos.",
+    reparto: "No disponible",
+    director: "No disponible",
+    trailerUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
   },
   {
-    titulo: "El Bosque Oscuro",
-    genero: "Terror / Sobrenatural",
-    duracion: "1h 55min",
-    clasificacion: "+16",
-    rating: 7.1,
+    titulo: "Super Mario Galaxy La película",
+    genero: "Fantasía / Familiar / Aventura",
+    duracion: "1:50 hs",
+    clasificacion: "ATP",
+    rating: 9.0,
     imagen: movie4,
-    horarios: ["20:30", "22:45"],
+    horarios: ["18:00 hs", "20:05 hs", "22:35 hs"],
     sala: "Sala 2",
-    idioma: "Subtitulada",
-    descripcion: "Un grupo de amigos decide acampar en un bosque remoto rodeado de leyendas locales, solo para despertar a una antigua e implacable entidad que los cazará uno por uno.",
-    reparto: "Florence Pugh, Bill Skarsgård, Mia Goth",
-    director: "Ari Aster",
-    trailerUrl: "https://www.youtube.com/embed/1Vnghdsjmd0"
+    idioma: "Latino y Subtitulado",
+    descripcion: "Mario viaja a través del espacio para rescatar a la Princesa Peach en esta espectacular aventura galáctica.",
+    reparto: "Chris Pratt",
+    director: "Illumination",
+    trailerUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
   },
 ];
 
@@ -101,9 +101,14 @@ const CarteleraSection = () => {
           <h2 className="text-4xl md:text-5xl font-heading font-bold uppercase tracking-tight mb-3">
             <span className="text-gradient-gold">Cartelera</span>
           </h2>
-          <div className="flex items-center justify-center gap-2 text-muted-foreground">
-            <Calendar className="h-4 w-4" />
-            <p className="text-sm uppercase tracking-wider">En cartel esta semana</p>
+          <div className="flex flex-col items-center justify-center gap-3 mt-2 text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <Calendar className="h-4 w-4" />
+              <p className="text-sm uppercase tracking-wider font-semibold">Del 02 de ABR al 8 de ABR</p>
+            </div>
+            <p className="text-xs text-primary bg-primary/10 px-3 py-1.5 rounded-full font-medium border border-primary/20">
+              HORARIOS DE BOLETERÍA: LUNES Cerrado. Resto de la semana 17:30 hs
+            </p>
           </div>
         </motion.div>
 
