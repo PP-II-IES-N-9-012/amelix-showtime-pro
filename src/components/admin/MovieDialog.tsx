@@ -115,15 +115,15 @@ const MovieDialog = ({ movie, isOpen, onClose, onSaved }: MovieDialogProps) => {
     try {
       const payload = {
         title: formData.title,
-        overview: formData.overview,
-        genres: formData.genres,
+        overview: formData.overview || null,
+        genres: formData.genres || null,
         duration_minutes: formData.duration_minutes ? parseInt(formData.duration_minutes) : null,
         rating: formData.rating ? parseFloat(formData.rating) : null,
-        classification: formData.classification,
-        poster_url: formData.poster_url,
-        trailer_url: formData.trailer_url,
-        director: formData.director,
-        cast_list: formData.cast_list,
+        classification: formData.classification || null,
+        poster_url: formData.poster_url || null,
+        trailer_url: formData.trailer_url || null,
+        director: formData.director || null,
+        cast_list: formData.cast_list || null,
         status: formData.status
       };
 
