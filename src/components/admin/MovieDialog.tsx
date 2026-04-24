@@ -118,7 +118,7 @@ const MovieDialog = ({ movie, isOpen, onClose, onSaved }: MovieDialogProps) => {
         overview: formData.overview,
         genres: formData.genres,
         duration_minutes: formData.duration_minutes ? parseInt(formData.duration_minutes) : null,
-        rating: formData.rating,
+        rating: formData.rating ? parseFloat(formData.rating) : null,
         classification: formData.classification,
         poster_url: formData.poster_url,
         trailer_url: formData.trailer_url,
