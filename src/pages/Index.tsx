@@ -9,10 +9,12 @@ import PreciosSection from "@/components/PreciosSection";
 import MapaSection from "@/components/MapaSection";
 import ContactoFaqSection from "@/components/ContactoFaqSection";
 import FooterSection from "@/components/FooterSection";
+import SiteStatusBanner from "@/components/SiteStatusBanner";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
+      <SiteStatusBanner />
       <Navbar />
       <PromocionesCarouselSection />
       <HeroSection />
