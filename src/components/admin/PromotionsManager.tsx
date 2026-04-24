@@ -7,10 +7,13 @@ import { Loader2, Plus, Edit, Trash2, Image as ImageIcon } from "lucide-react";
 import { toast } from "sonner";
 import { getPromotions } from "@/services/movieService";
 import { Promotion } from "@/types/database.types";
+import PromotionDialog from "./PromotionDialog";
 
 const PromotionsManager = () => {
   const [promotions, setPromotions] = useState<Promotion[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedPromotion, setSelectedPromotion] = useState<Promotion | null>(null);
 
   const fetchPromotions = async () => {
     setIsLoading(true);
@@ -22,6 +25,30 @@ const PromotionsManager = () => {
       toast.error("Error al cargar promociones");
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleAddNew = () => {
+    setSelectedPromotion(null);
+    setIsDialogOpen(true);
+  };
+
+  const handleEdit = (promo: Promotion) => {
+    setSelectedPromotion(promo);
+    setIsDialogOpen(true);
+  };
+
+  const handleDelete = async (id: number) => {
+    if (!window.confirm("¿Estás seguro de que quieres eliminar esta promoción?")) return;
+    
+    try {
+      const { error } = await supabase.from('promotions').delete().eq('id', id);
+      if (error) throw error;
+      toast.success("Promoción eliminada correctamente");
+      fetchPromotions();
+    } catch (error: any) {
+      console.error(error);
+      toast.error(error.message || "Error al eliminar la promoción");
     }
   };
 
@@ -38,7 +65,7 @@ const PromotionsManager = () => {
             Administra los banners promocionales de la página principal.
           </CardDescription>
         </div>
-        <Button className="shrink-0 gap-2 font-bold shadow-lg shadow-primary/20">
+        <Button onClick={handleAddNew} className="shrink-0 gap-2 font-bold shadow-lg shadow-primary/20">
           <Plus className="w-4 h-4" /> Nuevo Anuncio
         </Button>
       </CardHeader>
@@ -84,10 +111,10 @@ const PromotionsManager = () => {
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-2">
-                        <Button variant="outline" size="icon" className="h-8 w-8 text-blue-400 hover:text-blue-300 hover:bg-blue-400/10 border-blue-400/20" title="Editar">
+                        <Button onClick={() => handleEdit(promo)} variant="outline" size="icon" className="h-8 w-8 text-blue-400 hover:text-blue-300 hover:bg-blue-400/10 border-blue-400/20" title="Editar">
                           <Edit className="h-4 w-4" />
                         </Button>
-                        <Button variant="outline" size="icon" className="h-8 w-8 text-destructive hover:text-red-300 hover:bg-destructive/10 border-destructive/20" title="Eliminar">
+                        <Button onClick={() => handleDelete(promo.id)} variant="outline" size="icon" className="h-8 w-8 text-destructive hover:text-red-300 hover:bg-destructive/10 border-destructive/20" title="Eliminar">
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>
@@ -99,6 +126,13 @@ const PromotionsManager = () => {
           </div>
         )}
       </CardContent>
+
+      <PromotionDialog 
+        promotion={selectedPromotion} 
+        isOpen={isDialogOpen} 
+        onClose={() => setIsDialogOpen(false)} 
+        onSaved={fetchPromotions} 
+      />
     </Card>
   );
 };

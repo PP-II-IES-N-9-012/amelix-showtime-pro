@@ -6,10 +6,13 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Loader2, Plus, Edit, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { MovieWithShowtimes, getBillboardMovies } from "@/services/movieService";
+import MovieDialog from "./MovieDialog";
 
 const MoviesManager = () => {
   const [movies, setMovies] = useState<MovieWithShowtimes[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedMovie, setSelectedMovie] = useState<MovieWithShowtimes | null>(null);
 
   const fetchMovies = async () => {
     setIsLoading(true);
@@ -21,6 +24,30 @@ const MoviesManager = () => {
       toast.error("Error al cargar cartelera");
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleAddNew = () => {
+    setSelectedMovie(null);
+    setIsDialogOpen(true);
+  };
+
+  const handleEdit = (movie: MovieWithShowtimes) => {
+    setSelectedMovie(movie);
+    setIsDialogOpen(true);
+  };
+
+  const handleDelete = async (id: number) => {
+    if (!window.confirm("¿Estás seguro de que quieres eliminar esta película?")) return;
+    
+    try {
+      const { error } = await supabase.from('movies').delete().eq('id', id);
+      if (error) throw error;
+      toast.success("Película eliminada correctamente");
+      fetchMovies();
+    } catch (error: any) {
+      console.error(error);
+      toast.error(error.message || "Error al eliminar la película");
     }
   };
 
@@ -37,7 +64,7 @@ const MoviesManager = () => {
             Administra las películas visibles actualmente en la cartelera.
           </CardDescription>
         </div>
-        <Button className="shrink-0 gap-2 font-bold shadow-lg shadow-primary/20">
+        <Button onClick={handleAddNew} className="shrink-0 gap-2 font-bold shadow-lg shadow-primary/20">
           <Plus className="w-4 h-4" /> Nueva Película
         </Button>
       </CardHeader>
@@ -83,10 +110,10 @@ const MoviesManager = () => {
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-2">
-                        <Button variant="outline" size="icon" className="h-8 w-8 text-blue-400 hover:text-blue-300 hover:bg-blue-400/10 border-blue-400/20" title="Editar">
+                        <Button onClick={() => handleEdit(movie)} variant="outline" size="icon" className="h-8 w-8 text-blue-400 hover:text-blue-300 hover:bg-blue-400/10 border-blue-400/20" title="Editar">
                           <Edit className="h-4 w-4" />
                         </Button>
-                        <Button variant="outline" size="icon" className="h-8 w-8 text-destructive hover:text-red-300 hover:bg-destructive/10 border-destructive/20" title="Eliminar">
+                        <Button onClick={() => handleDelete(movie.id)} variant="outline" size="icon" className="h-8 w-8 text-destructive hover:text-red-300 hover:bg-destructive/10 border-destructive/20" title="Eliminar">
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>
@@ -98,6 +125,13 @@ const MoviesManager = () => {
           </div>
         )}
       </CardContent>
+
+      <MovieDialog 
+        movie={selectedMovie} 
+        isOpen={isDialogOpen} 
+        onClose={() => setIsDialogOpen(false)} 
+        onSaved={fetchMovies} 
+      />
     </Card>
   );
 };
