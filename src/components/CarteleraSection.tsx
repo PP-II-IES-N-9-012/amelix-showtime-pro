@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Clock, Star, Calendar, X, Film, Users, PlayCircle, Loader2 } from "lucide-react";
 import { getBillboardMovies, MovieWithShowtimes } from "@/services/movieService";
+import { supabase } from "@/lib/supabase";
 
 const CarteleraSection = () => {
   const [movies, setMovies] = useState<MovieWithShowtimes[]>([]);
@@ -21,7 +22,28 @@ const CarteleraSection = () => {
         setIsLoading(false);
       }
     };
+    
     fetchMovies();
+
+    // Subscribe to realtime updates for both movies and showtimes
+    const moviesChannel = supabase
+      .channel('public:movies')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'movies' }, () => {
+        getBillboardMovies().then(setMovies);
+      })
+      .subscribe();
+
+    const showtimesChannel = supabase
+      .channel('public:showtimes')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'showtimes' }, () => {
+        getBillboardMovies().then(setMovies);
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(moviesChannel);
+      supabase.removeChannel(showtimesChannel);
+    };
   }, []);
 
   return (
@@ -41,9 +63,6 @@ const CarteleraSection = () => {
               <Calendar className="h-4 w-4" />
               <p className="text-sm uppercase tracking-wider font-semibold">Tus Películas Favoritas</p>
             </div>
-            <p className="text-xs text-primary bg-primary/10 px-3 py-1.5 rounded-full font-medium border border-primary/20">
-              HORARIOS DE BOLETERÍA: LUNES Cerrado. Resto de la semana 17:30 hs
-            </p>
           </div>
         </motion.div>
 
@@ -114,17 +133,24 @@ const CarteleraSection = () => {
                         Horarios Disponibles
                       </p>
                       {peli.showtimes && peli.showtimes.length > 0 ? (
-                        <div className="flex flex-wrap gap-2">
+                        <div className="flex flex-col gap-2 mt-3">
                           {peli.showtimes.map((st) => (
-                            <button
+                            <div
                               key={st.id}
                               onClick={(e) => e.stopPropagation()}
-                              className="px-3 py-1.5 text-[11px] font-medium bg-muted hover:bg-primary hover:text-primary-foreground rounded-md transition-colors border border-border hover:border-primary cursor-default flex flex-col items-center leading-tight"
+                              className="flex items-center justify-between w-full p-3 bg-muted/20 hover:bg-muted/50 rounded-xl border border-border transition-all cursor-default group"
                             >
-                              <span className="font-bold">{st.showing_time?.slice(0, 5)}</span>
-                              <span className="opacity-70 text-[9px] uppercase">{st.language_type}</span>
-                              <span className="opacity-70 text-[9px]">{st.format} {st.room_name}</span>
-                            </button>
+                              <div className="flex items-center gap-3">
+                                <div className="bg-primary/10 text-primary p-2 rounded-lg group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                                  <Clock className="w-4 h-4" />
+                                </div>
+                                <span className="font-heading font-bold text-xl tracking-tight">{st.showing_time?.slice(0, 5)}<span className="text-sm font-normal text-muted-foreground ml-1">hs</span></span>
+                              </div>
+                              <div className="flex flex-col items-end">
+                                <span className="text-[10px] uppercase font-bold text-primary tracking-widest">{st.language_type}</span>
+                                <span className="text-xs font-semibold text-muted-foreground mt-0.5">{st.room_name}</span>
+                              </div>
+                            </div>
                           ))}
                         </div>
                       ) : (
