@@ -72,5 +72,11 @@ export const getPromotions = async (): Promise<Promotion[]> => {
     return [];
   }
 
-  return data || [];
+  const now = new Date();
+  const activePromos = (data || []).filter((promo: Promotion) => {
+    if (!promo.valid_until) return true;
+    return new Date(promo.valid_until) > now;
+  });
+
+  return activePromos;
 };

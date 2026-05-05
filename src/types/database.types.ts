@@ -38,5 +38,6 @@ export type Promotion = {
   promo_type: 'promo' | 'destacada';
   is_active: boolean;
   order_index: number;
+  valid_until: string | null;
   created_at: string;
 };
