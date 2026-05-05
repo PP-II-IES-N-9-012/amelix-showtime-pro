@@ -76,7 +76,7 @@ const CarteleraSection = () => {
             <p className="text-muted-foreground">No hay películas en cartelera en este momento.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-2 gap-3 sm:gap-6">
             {movies.map((peli, i) => (
               <motion.div
                 key={peli.id}
@@ -84,11 +84,11 @@ const CarteleraSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="bg-card rounded-xl overflow-hidden border border-border hover:border-primary/30 transition-all group cursor-pointer"
+                className="bg-card rounded-xl overflow-hidden border border-border hover:border-primary/30 transition-all group cursor-pointer flex flex-col h-full"
                 onClick={() => setSelectedMovie(peli)}
               >
-                <div className="flex flex-col sm:flex-row">
-                  <div className="sm:w-48 h-64 sm:h-auto flex-shrink-0 overflow-hidden bg-muted">
+                <div className="flex flex-col sm:flex-row h-full">
+                  <div className="w-full aspect-[2/3] sm:w-48 sm:aspect-auto sm:h-full flex-shrink-0 overflow-hidden bg-muted">
                     {peli.poster_url ? (
                       <img
                         src={peli.poster_url}
@@ -98,13 +98,33 @@ const CarteleraSection = () => {
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
-                        <Film className="w-12 h-12 text-muted-foreground/50" />
+                        <Film className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground/50" />
                       </div>
                     )}
                   </div>
-                  <div className="flex-1 p-5 flex flex-col justify-between">
+                  <div className="flex-1 p-3 sm:p-5 flex flex-col justify-between">
                     <div>
-                      <div className="flex items-start justify-between mb-2">
+                      {/* Mobile Header */}
+                      <div className="sm:hidden mb-1">
+                        <h3 className="text-[13px] font-heading font-bold uppercase line-clamp-2 leading-tight mb-1.5">
+                          {peli.title}
+                        </h3>
+                        <div className="flex flex-wrap items-center gap-1.5">
+                          {peli.classification && (
+                            <span className="text-[9px] font-bold bg-primary/20 text-primary px-1.5 py-0.5 rounded flex-shrink-0">
+                              {peli.classification}
+                            </span>
+                          )}
+                          {peli.duration_minutes && (
+                            <span className="text-[9px] text-muted-foreground border border-border px-1.5 py-0.5 rounded">
+                              {peli.duration_minutes} min
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Desktop Header */}
+                      <div className="hidden sm:flex items-start justify-between mb-2">
                         <h3 className="text-xl font-heading font-bold uppercase">
                           {peli.title}
                         </h3>
@@ -114,8 +134,10 @@ const CarteleraSection = () => {
                           </span>
                         )}
                       </div>
-                      <p className="text-sm text-muted-foreground mb-1">{peli.genres}</p>
-                      <div className="flex items-center gap-3 text-xs text-muted-foreground mb-3">
+                      
+                      <p className="text-sm text-muted-foreground mb-1 hidden sm:block">{peli.genres}</p>
+                      
+                      <div className="hidden sm:flex items-center gap-3 text-xs text-muted-foreground mb-3">
                         {peli.duration_minutes && (
                           <span className="flex items-center gap-1">
                             <Clock className="h-3 w-3" /> {peli.duration_minutes} min
@@ -127,34 +149,60 @@ const CarteleraSection = () => {
                           </span>
                         )}
                       </div>
+
+                      {/* Mobile "Ver sinopsis" */}
+                      <div className="flex sm:hidden items-center gap-1.5 text-primary mt-2 text-[11px] font-medium">
+                        <div className="bg-primary text-primary-foreground rounded-full w-3.5 h-3.5 flex items-center justify-center">
+                          <span className="text-[9px] font-bold font-serif italic">i</span>
+                        </div>
+                        Ver sinópsis
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2 font-heading">
+                    
+                    <div className="mt-2 sm:mt-0">
+                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2 font-heading hidden sm:block">
                         Horarios Disponibles
                       </p>
                       {peli.showtimes && peli.showtimes.length > 0 ? (
-                        <div className="flex flex-col gap-2 mt-3">
-                          {peli.showtimes.map((st) => (
-                            <div
-                              key={st.id}
-                              onClick={(e) => e.stopPropagation()}
-                              className="flex items-center justify-between w-full p-3 bg-muted/20 hover:bg-muted/50 rounded-xl border border-border transition-all cursor-default group"
-                            >
-                              <div className="flex items-center gap-3">
-                                <div className="bg-primary/10 text-primary p-2 rounded-lg group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                                  <Clock className="w-4 h-4" />
+                        <>
+                          {/* Desktop schedules */}
+                          <div className="hidden sm:flex flex-col gap-2 mt-3">
+                            {peli.showtimes.map((st) => (
+                              <div
+                                key={st.id}
+                                onClick={(e) => e.stopPropagation()}
+                                className="flex items-center justify-between w-full p-3 bg-muted/20 hover:bg-muted/50 rounded-xl border border-border transition-all cursor-default group"
+                              >
+                                <div className="flex items-center gap-3">
+                                  <div className="bg-primary/10 text-primary p-2 rounded-lg group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                                    <Clock className="w-4 h-4" />
+                                  </div>
+                                  <span className="font-heading font-bold text-xl tracking-tight">{st.showing_time?.slice(0, 5)}<span className="text-sm font-normal text-muted-foreground ml-1">hs</span></span>
                                 </div>
-                                <span className="font-heading font-bold text-xl tracking-tight">{st.showing_time?.slice(0, 5)}<span className="text-sm font-normal text-muted-foreground ml-1">hs</span></span>
+                                <div className="flex flex-col items-end">
+                                  <span className="text-[10px] uppercase font-bold text-primary tracking-widest">{st.language_type}</span>
+                                  <span className="text-xs font-semibold text-muted-foreground mt-0.5">{st.room_name}</span>
+                                </div>
                               </div>
-                              <div className="flex flex-col items-end">
-                                <span className="text-[10px] uppercase font-bold text-primary tracking-widest">{st.language_type}</span>
-                                <span className="text-xs font-semibold text-muted-foreground mt-0.5">{st.room_name}</span>
+                            ))}
+                          </div>
+                          
+                          {/* Mobile schedules */}
+                          <div className="flex sm:hidden flex-wrap gap-1.5 mt-2.5">
+                            {peli.showtimes.map((st) => (
+                              <div
+                                key={st.id}
+                                onClick={(e) => e.stopPropagation()}
+                                className="bg-muted/40 border border-border px-1.5 py-0.5 rounded flex items-center gap-1 text-[10px]"
+                              >
+                                <Clock className="w-2.5 h-2.5 text-primary" />
+                                <span className="font-bold text-foreground">{st.showing_time?.slice(0, 5)}</span>
                               </div>
-                            </div>
-                          ))}
-                        </div>
+                            ))}
+                          </div>
+                        </>
                       ) : (
-                        <p className="text-xs text-muted-foreground italic">Sin horarios programados</p>
+                        <p className="text-[10px] sm:text-xs text-muted-foreground italic mt-2 sm:mt-0">Sin horarios programados</p>
                       )}
                     </div>
                   </div>
