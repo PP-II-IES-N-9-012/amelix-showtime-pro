@@ -51,6 +51,7 @@ const MovieDialog = ({ movie, isOpen, onClose, onSaved }: MovieDialogProps) => {
     rating: "",
     classification: "",
     poster_url: "",
+    backdrop_url: "",
     trailer_url: "",
     director: "",
     cast_list: "",
@@ -72,6 +73,7 @@ const MovieDialog = ({ movie, isOpen, onClose, onSaved }: MovieDialogProps) => {
         rating: movie.rating || "",
         classification: movie.classification || "",
         poster_url: movie.poster_url || "",
+        backdrop_url: movie.backdrop_url || "",
         trailer_url: movie.trailer_url || "",
         director: movie.director || "",
         cast_list: movie.cast_list || "",
@@ -89,7 +91,7 @@ const MovieDialog = ({ movie, isOpen, onClose, onSaved }: MovieDialogProps) => {
     } else {
       setFormData({
         title: "", overview: "", genres: "", duration_minutes: "", rating: "", classification: "",
-        poster_url: "", trailer_url: "", director: "", cast_list: "", status: "released"
+        poster_url: "", backdrop_url: "", trailer_url: "", director: "", cast_list: "", status: "released"
       });
       setShowtimesList([]);
     }
@@ -126,6 +128,7 @@ const MovieDialog = ({ movie, isOpen, onClose, onSaved }: MovieDialogProps) => {
         genres: details.genres,
         duration_minutes: details.duration_minutes ? String(details.duration_minutes) : "",
         poster_url: details.poster_url || "",
+        backdrop_url: details.backdrop_url || "",
         trailer_url: details.trailer_url || "",
         director: details.director || "",
         cast_list: details.cast_list || ""
@@ -156,6 +159,7 @@ const MovieDialog = ({ movie, isOpen, onClose, onSaved }: MovieDialogProps) => {
         rating: formData.rating ? parseFloat(formData.rating) : null,
         classification: formData.classification || null,
         poster_url: formData.poster_url || null,
+        backdrop_url: formData.backdrop_url || null,
         trailer_url: formData.trailer_url || null,
         director: formData.director || null,
         cast_list: formData.cast_list || null,
@@ -296,6 +300,11 @@ const MovieDialog = ({ movie, isOpen, onClose, onSaved }: MovieDialogProps) => {
           <div className="space-y-2 md:col-span-2">
             <Label htmlFor="poster_url">URL del Póster</Label>
             <Input id="poster_url" name="poster_url" value={formData.poster_url} onChange={handleChange} />
+          </div>
+
+          <div className="space-y-2 md:col-span-2">
+            <Label htmlFor="backdrop_url">URL del Banner/Portada (Para móviles)</Label>
+            <Input id="backdrop_url" name="backdrop_url" value={formData.backdrop_url} onChange={handleChange} />
           </div>
 
           <div className="space-y-2 md:col-span-2">

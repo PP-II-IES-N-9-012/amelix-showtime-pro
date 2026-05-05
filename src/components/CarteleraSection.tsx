@@ -231,19 +231,29 @@ const CarteleraSection = () => {
               className="relative w-full max-w-3xl bg-card border border-border rounded-xl shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[90vh] overflow-y-auto"
             >
               <button
-                onClick={() => setSelectedMovie(null)}
-                className="absolute top-3 right-3 z-10 p-2 bg-background/80 hover:bg-background text-foreground rounded-full backdrop-blur-md transition-colors shadow-sm"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedMovie(null);
+                }}
+                className="absolute top-3 right-3 z-50 p-2 bg-background/80 hover:bg-background text-foreground rounded-full backdrop-blur-md transition-colors shadow-sm"
               >
                 <X className="w-5 h-5" />
               </button>
               
               <div className="md:w-2/5 h-64 md:h-auto overflow-hidden relative group bg-muted flex-shrink-0">
-                {selectedMovie.poster_url ? (
-                  <img 
-                    src={selectedMovie.poster_url} 
-                    alt={selectedMovie.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
+                {selectedMovie.poster_url || selectedMovie.backdrop_url ? (
+                  <>
+                    <img 
+                      src={selectedMovie.poster_url || selectedMovie.backdrop_url || ''} 
+                      alt={selectedMovie.title}
+                      className="hidden md:block w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <img 
+                      src={selectedMovie.backdrop_url || selectedMovie.poster_url || ''} 
+                      alt={selectedMovie.title}
+                      className="block md:hidden w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </>
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
                     <Film className="w-16 h-16 text-muted-foreground/50" />

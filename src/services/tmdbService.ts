@@ -16,6 +16,7 @@ export interface TMDBMovieDetails {
   genres: string;
   duration_minutes: number;
   poster_url: string;
+  backdrop_url: string | null;
   trailer_url: string | null;
   director: string | null;
   cast_list: string | null;
@@ -61,6 +62,7 @@ export const getTMDBMovieDetails = async (movieId: number): Promise<TMDBMovieDet
 
   const genres = details.genres?.map((g: any) => g.name).join(', ') || '';
   const posterUrl = details.poster_path ? `https://image.tmdb.org/t/p/w500${details.poster_path}` : '';
+  const backdropUrl = details.backdrop_path ? `https://image.tmdb.org/t/p/w1280${details.backdrop_path}` : null;
 
   return {
     id: details.id,
@@ -69,6 +71,7 @@ export const getTMDBMovieDetails = async (movieId: number): Promise<TMDBMovieDet
     genres,
     duration_minutes: details.runtime || 0,
     poster_url: posterUrl,
+    backdrop_url: backdropUrl,
     trailer_url: trailerUrl,
     director,
     cast_list: castList
