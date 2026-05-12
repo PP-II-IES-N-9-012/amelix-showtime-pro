@@ -2,8 +2,7 @@
 
 AMELIX Cinema es una aplicación web moderna diseñada para un cine en San Rafael, Mendoza. Permite a los usuarios consultar la cartelera actual, ver horarios, precios y descubrir los próximos estrenos. Esta plataforma ofrece una experiencia de usuario rápida, fluida y atractiva, gracias a una interfaz construida con las últimas tecnologías del ecosistema React.
 
-## 📃 [Ingreso al informe](https://docs.google.com/document/d/160bKPBruO8i1KltAM27zO6i6GSHsN60e/edit?usp=sharing&ouid=112642608756663742861&rtpof=true&sd=true)
-
+## 📃 [Ingreso al informe](https://docs.google.com/document/d/1UQD6ZXsXiKY_qZ_wp-hO_laty9-cwTQr/edit?usp=sharing&ouid=110171474056940226835&rtpof=true&sd=true)
 ## ✨ Características Principales
 
 - **🎬 Cartelera y Próximos Estrenos**: Consulta las películas actuales y descubre las que llegarán pronto al cine.
