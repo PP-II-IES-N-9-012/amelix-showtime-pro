@@ -2,19 +2,20 @@ import { useState } from "react";
 import { Menu, X, MapPin } from "lucide-react";
 import amelixLogo from "@/assets/amelix-logo.png";
 import { ModeToggle } from "./ModeToggle";
-
-const navLinks = [
-  { label: "Cartelera", href: "#cartelera" },
-  { label: "Próximamente", href: "#proximamente" },
-  { label: "Candy Bar", href: "#candybar" },
-  { label: "Nosotros", href: "#nosotros" },
-  { label: "Precios", href: "#precios" },
-  { label: "Ubicación", href: "#ubicacion" },
-  { label: "Contacto", href: "#contacto" },
-];
+import { openPurchaseFlow } from "@/lib/events";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+
+  const navLinks = [
+    { label: "Cartelera", href: "#cartelera" },
+    { label: "Próximamente", href: "#proximamente" },
+    { label: "Nosotros", href: "#nosotros" },
+    { label: "Precios", href: "#precios" },
+    { label: "Ubicación", href: "#ubicacion" },
+    { label: "Contacto", href: "#contacto" },
+    { label: "Comprar", href: "#", onClick: () => openPurchaseFlow() }
+  ];
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border">
@@ -24,15 +25,31 @@ const Navbar = () => {
         </a>
 
         <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wider font-heading"
-            >
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link) => {
+            if (link.onClick) {
+              return (
+                <button
+                  key={link.label}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    link.onClick();
+                  }}
+                  className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wider font-heading text-left"
+                >
+                  {link.label}
+                </button>
+              );
+            }
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wider font-heading"
+              >
+                {link.label}
+              </a>
+            );
+          })}
         </div>
 
         <div className="flex items-center gap-4">
@@ -54,16 +71,33 @@ const Navbar = () => {
 
       {open && (
         <div className="md:hidden bg-background border-b border-border px-4 pb-4">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={() => setOpen(false)}
-              className="block py-3 text-sm font-medium text-muted-foreground hover:text-foreground uppercase tracking-wider font-heading"
-            >
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link) => {
+            if (link.onClick) {
+              return (
+                <button
+                  key={link.label}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setOpen(false);
+                    link.onClick();
+                  }}
+                  className="block w-full py-3 text-left text-sm font-medium text-muted-foreground hover:text-foreground uppercase tracking-wider font-heading"
+                >
+                  {link.label}
+                </button>
+              );
+            }
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => setOpen(false)}
+                className="block py-3 text-sm font-medium text-muted-foreground hover:text-foreground uppercase tracking-wider font-heading"
+              >
+                {link.label}
+              </a>
+            );
+          })}
           <div className="flex items-center gap-2 pt-3 text-sm text-muted-foreground border-t border-border mt-2">
             <MapPin className="h-4 w-4 text-primary" />
             <span>San Rafael, Mendoza</span>

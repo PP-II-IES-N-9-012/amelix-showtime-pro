@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
-import { Check, Star, ShoppingCart, X, CreditCard } from "lucide-react";
+import { Check, Star, ShoppingCart } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useBoleteria } from "@/hooks/useBoleteria";
+import { openPurchaseFlow } from "@/lib/events";
 
 const precios = [
   {
@@ -31,22 +31,10 @@ const precios = [
   },
 ];
 
-
-interface CartItem {
-  nombre: string;
-  precio: string;
-  precioNum: number;
-  cantidad: number;
-  tipo: "entrada" | "combo";
-}
-
 const PreciosSection = () => {
   const { isOpen: boleteriaAbierta } = useBoleteria();
-  const [cart, setCart] = useState<CartItem[]>([]);
-  const [showCheckout, setShowCheckout] = useState(false);
-  const [processing, setProcessing] = useState(false);
 
-  const addToCart = (nombre: string, precio: string, precioNum: number, tipo: "entrada" | "combo") => {
+  const handleComprar = (nombrePlan: string) => {
     if (!boleteriaAbierta) {
       toast({
         title: "Boletería cerrada 🍿",
@@ -55,45 +43,14 @@ const PreciosSection = () => {
       });
       return;
     }
-    setCart((prev) => {
-      const existing = prev.find((item) => item.nombre === nombre);
-      if (existing) {
-        return prev.map((item) =>
-          item.nombre === nombre ? { ...item, cantidad: item.cantidad + 1 } : item
-        );
-      }
-      return [...prev, { nombre, precio, precioNum, cantidad: 1, tipo }];
-    });
-    toast({ title: `${nombre} agregado`, description: "Se añadió a tu carrito" });
-  };
+    
+    const ticketTypeMap: Record<string, string> = {
+      "General": "general",
+      "Premium": "premium",
+      "Miércoles Popular": "popular"
+    };
 
-  const removeFromCart = (nombre: string) => {
-    setCart((prev) => prev.filter((item) => item.nombre !== nombre));
-  };
-
-  const updateQty = (nombre: string, delta: number) => {
-    setCart((prev) =>
-      prev
-        .map((item) =>
-          item.nombre === nombre ? { ...item, cantidad: Math.max(0, item.cantidad + delta) } : item
-        )
-        .filter((item) => item.cantidad > 0)
-    );
-  };
-
-  const total = cart.reduce((sum, item) => sum + item.precioNum * item.cantidad, 0);
-
-  const handlePay = () => {
-    setProcessing(true);
-    setTimeout(() => {
-      setProcessing(false);
-      setShowCheckout(false);
-      setCart([]);
-      toast({
-        title: "¡Compra exitosa! 🎬",
-        description: "Tu reserva fue confirmada. ¡Disfrutá la película!",
-      });
-    }, 2000);
+    openPurchaseFlow({ ticketType: ticketTypeMap[nombrePlan] });
   };
 
   return (
@@ -109,12 +66,12 @@ const PreciosSection = () => {
             <span className="text-gradient-gold">Precios</span>
           </h2>
           <p className="text-sm uppercase tracking-wider text-muted-foreground">
-            Entradas y combos
+            Entradas y salas
           </p>
         </motion.div>
 
         {/* Entradas */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {precios.map((plan, i) => (
             <motion.div
               key={plan.nombre}
@@ -145,7 +102,7 @@ const PreciosSection = () => {
                 ))}
               </ul>
               <button
-                onClick={() => addToCart(plan.nombre, plan.precio, plan.precioNum, "entrada")}
+                onClick={() => handleComprar(plan.nombre)}
                 className="mt-6 inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-3 rounded-lg font-heading uppercase tracking-wider text-sm font-semibold transition-all glow-red"
               >
                 <ShoppingCart className="h-4 w-4" />
@@ -154,106 +111,6 @@ const PreciosSection = () => {
             </motion.div>
           ))}
         </div>
-
-
-        {/* Floating Cart Button */}
-        {cart.length > 0 && !showCheckout && (
-          <motion.button
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            onClick={() => setShowCheckout(true)}
-            className="fixed bottom-6 right-6 z-50 bg-primary text-primary-foreground p-4 rounded-full shadow-2xl glow-red flex items-center gap-2 font-heading uppercase tracking-wider text-sm font-semibold"
-          >
-            <ShoppingCart className="h-5 w-5" />
-            <span className="hidden sm:inline">Carrito</span>
-            <span className="bg-accent text-accent-foreground text-xs w-6 h-6 rounded-full flex items-center justify-center font-bold">
-              {cart.reduce((sum, item) => sum + item.cantidad, 0)}
-            </span>
-          </motion.button>
-        )}
-
-        {/* Checkout Modal */}
-        {showCheckout && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" onClick={() => setShowCheckout(false)} />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="relative bg-card border border-border rounded-xl w-full max-w-md p-6 shadow-2xl max-h-[80vh] overflow-y-auto"
-            >
-              <button
-                onClick={() => setShowCheckout(false)}
-                className="absolute top-4 right-4 text-muted-foreground hover:text-foreground"
-              >
-                <X className="h-5 w-5" />
-              </button>
-
-              <h3 className="text-xl font-heading font-bold uppercase mb-6 flex items-center gap-2">
-                <ShoppingCart className="h-5 w-5 text-primary" />
-                Tu Carrito
-              </h3>
-
-              {cart.length === 0 ? (
-                <p className="text-muted-foreground text-sm text-center py-8">Tu carrito está vacío</p>
-              ) : (
-                <>
-                  <div className="space-y-3 mb-6">
-                    {cart.map((item) => (
-                      <div key={item.nombre} className="flex items-center justify-between bg-muted/30 rounded-lg p-3">
-                        <div className="flex-1">
-                          <p className="text-sm font-medium">{item.nombre}</p>
-                          <p className="text-xs text-muted-foreground">{item.precio} c/u</p>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <button
-                            onClick={() => updateQty(item.nombre, -1)}
-                            className="w-7 h-7 rounded bg-muted flex items-center justify-center text-sm hover:bg-primary hover:text-primary-foreground transition-colors"
-                          >
-                            −
-                          </button>
-                          <span className="text-sm font-medium w-6 text-center">{item.cantidad}</span>
-                          <button
-                            onClick={() => updateQty(item.nombre, 1)}
-                            className="w-7 h-7 rounded bg-muted flex items-center justify-center text-sm hover:bg-primary hover:text-primary-foreground transition-colors"
-                          >
-                            +
-                          </button>
-                          <button
-                            onClick={() => removeFromCart(item.nombre)}
-                            className="ml-2 text-muted-foreground hover:text-destructive transition-colors"
-                          >
-                            <X className="h-4 w-4" />
-                          </button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="border-t border-border pt-4 mb-6">
-                    <div className="flex justify-between items-center">
-                      <span className="text-lg font-heading font-bold uppercase">Total</span>
-                      <span className="text-2xl font-heading font-bold text-gradient-gold">
-                        ${total.toLocaleString("es-AR")}
-                      </span>
-                    </div>
-                  </div>
-
-                  <button
-                    onClick={handlePay}
-                    disabled={processing || !boleteriaAbierta}
-                    className="w-full inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-4 rounded-lg font-heading uppercase tracking-wider text-sm font-semibold transition-all glow-red disabled:opacity-50"
-                  >
-                    <CreditCard className="h-4 w-4" />
-                    {processing ? "Procesando pago..." : !boleteriaAbierta ? "Boletería Cerrada" : "Pagar ahora"}
-                  </button>
-                  <p className="text-xs text-muted-foreground text-center mt-3">
-                    Pago seguro • Aceptamos todas las tarjetas y Mercado Pago
-                  </p>
-                </>
-              )}
-            </motion.div>
-          </div>
-        )}
       </div>
     </section>
   );
