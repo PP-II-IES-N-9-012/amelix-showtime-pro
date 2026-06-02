@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Clock, Star, Calendar, X, Film, Users, PlayCircle, Loader2 } from "lucide-react";
 import { getBillboardMovies, MovieWithShowtimes } from "@/services/movieService";
 import { supabase } from "@/lib/supabase";
-import { openPurchaseFlow } from "@/lib/events";
 
 const CarteleraSection = () => {
   const [movies, setMovies] = useState<MovieWithShowtimes[]>([]);
@@ -215,12 +214,14 @@ const CarteleraSection = () => {
 
         {!isLoading && movies.length > 0 && (
           <div className="flex justify-center mt-12">
-            <button
-              onClick={() => openPurchaseFlow()}
+            <a
+              href="/comprar"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-gradient-to-r from-primary via-accent to-primary hover:opacity-90 text-primary-foreground px-10 py-4 rounded-xl font-heading uppercase tracking-widest text-sm font-extrabold transition-all shadow-[0_0_25px_rgba(234,179,8,0.35)] glow-red"
             >
               Comprar Ahora
-            </button>
+            </a>
           </div>
         )}
       </div>
@@ -337,15 +338,15 @@ const CarteleraSection = () => {
                   </div>
                 </div>
 
-                <button
-                  onClick={() => {
-                    openPurchaseFlow({ movieId: selectedMovie.id });
-                    setSelectedMovie(null);
-                  }}
+                <a
+                  href={`/comprar?movieId=${selectedMovie.id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setSelectedMovie(null)}
                   className="mt-6 w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground py-3.5 rounded-lg font-heading uppercase tracking-widest text-xs font-bold transition-all shadow-[0_0_15px_rgba(234,179,8,0.2)]"
                 >
                   Comprar ahora
-                </button>
+                </a>
               </div>
             </motion.div>
           </motion.div>
