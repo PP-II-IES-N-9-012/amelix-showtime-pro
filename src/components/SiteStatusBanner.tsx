@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
 import { AlertTriangle, Clock } from "lucide-react";
-import { supabase } from "@/lib/supabase";
+import { useBoleteria } from "@/hooks/useBoleteria";
 
 export const isWithinBusinessHours = (): boolean => {
   const now = new Date();
@@ -25,61 +24,10 @@ export const isWithinBusinessHours = (): boolean => {
 };
 
 const SiteStatusBanner = () => {
-  const [isManuallyOpen, setIsManuallyOpen] = useState<boolean | null>(null);
-  const [isScheduleOpen, setIsScheduleOpen] = useState<boolean>(true);
-
-  useEffect(() => {
-    const fetchStatus = async () => {
-      try {
-        const { data, error } = await supabase
-          .from("settings")
-          .select("is_open")
-          .eq("id", "global")
-          .single();
-
-        if (error) {
-          console.error("Error fetching site status:", error);
-          // Fallback to true if we fail to fetch (avoid locking people out randomly)
-          setIsManuallyOpen(true); 
-          return;
-        }
-
-        if (data) {
-          setIsManuallyOpen(data.is_open);
-        }
-      } catch (err) {
-        console.error(err);
-        setIsManuallyOpen(true);
-      }
-    };
-
-    fetchStatus();
-
-    // Check schedule periodically
-    setIsScheduleOpen(isWithinBusinessHours());
-    const scheduleInterval = setInterval(() => {
-      setIsScheduleOpen(isWithinBusinessHours());
-    }, 60000); // Check every minute
-
-    // Set up realtime listener for immediate updates
-    const channel = supabase
-      .channel('public:settings')
-      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'settings', filter: 'id=eq.global' }, (payload) => {
-        setIsManuallyOpen(payload.new.is_open);
-      })
-      .subscribe();
-
-    return () => {
-      clearInterval(scheduleInterval);
-      supabase.removeChannel(channel);
-    };
-  }, []);
-
-  // The cinema is open if it's manually open AND within business hours
-  const isCurrentlyOpen = isManuallyOpen === null ? true : (isManuallyOpen && isScheduleOpen);
+  const { isOpen: isCurrentlyOpen, isLoading } = useBoleteria();
 
   // Don't render anything if it's open or loading
-  if (isCurrentlyOpen) return null;
+  if (isLoading || isCurrentlyOpen) return null;
 
   return (
     <div className="bg-destructive/90 text-destructive-foreground px-4 py-3 text-center shadow-lg sticky top-0 z-50 backdrop-blur-md border-b flex items-center justify-center gap-3">

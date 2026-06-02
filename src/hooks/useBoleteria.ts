@@ -42,9 +42,10 @@ export const useBoleteria = () => {
     }, 60000);
 
     // Set up realtime listener for immediate updates
+    const uniqueChannelName = `settings_changes_${Math.random().toString(36).substring(2, 9)}`;
     const channel = supabase
-      .channel('public:settings:shared-hook')
-      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'settings', filter: 'id=eq.global' }, (payload) => {
+      .channel(uniqueChannelName)
+      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'settings', filter: 'id=eq.global' }, (payload: any) => {
         setIsManuallyOpen(payload.new.is_open);
       })
       .subscribe();
