@@ -16,8 +16,8 @@ export const isWithinBusinessHours = (): boolean => {
   }
 
   const timeInMinutes = hours * 60 + minutes;
-  // Open from 17:00 (1020 minutes) to 23:59 (1439 minutes)
-  if (timeInMinutes >= 1020 && timeInMinutes <= 1439) {
+  // Open from 17:30 (1050 minutes) to 23:59 (1439 minutes)
+  if (timeInMinutes >= 1050 && timeInMinutes <= 1439) {
     return true;
   }
   

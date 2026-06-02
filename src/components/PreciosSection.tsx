@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Check, Star, ShoppingCart, X, CreditCard } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { useBoleteria } from "@/hooks/useBoleteria";
 
 const precios = [
   {
@@ -40,11 +41,20 @@ interface CartItem {
 }
 
 const PreciosSection = () => {
+  const { isOpen: boleteriaAbierta } = useBoleteria();
   const [cart, setCart] = useState<CartItem[]>([]);
   const [showCheckout, setShowCheckout] = useState(false);
   const [processing, setProcessing] = useState(false);
 
   const addToCart = (nombre: string, precio: string, precioNum: number, tipo: "entrada" | "combo") => {
+    if (!boleteriaAbierta) {
+      toast({
+        title: "Boletería cerrada 🍿",
+        description: "El complejo se encuentra cerrado actualmente. No es posible realizar compras en este momento.",
+        variant: "destructive",
+      });
+      return;
+    }
     setCart((prev) => {
       const existing = prev.find((item) => item.nombre === nombre);
       if (existing) {
@@ -230,11 +240,11 @@ const PreciosSection = () => {
 
                   <button
                     onClick={handlePay}
-                    disabled={processing}
+                    disabled={processing || !boleteriaAbierta}
                     className="w-full inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-4 rounded-lg font-heading uppercase tracking-wider text-sm font-semibold transition-all glow-red disabled:opacity-50"
                   >
                     <CreditCard className="h-4 w-4" />
-                    {processing ? "Procesando pago..." : "Pagar ahora"}
+                    {processing ? "Procesando pago..." : !boleteriaAbierta ? "Boletería Cerrada" : "Pagar ahora"}
                   </button>
                   <p className="text-xs text-muted-foreground text-center mt-3">
                     Pago seguro • Aceptamos todas las tarjetas y Mercado Pago

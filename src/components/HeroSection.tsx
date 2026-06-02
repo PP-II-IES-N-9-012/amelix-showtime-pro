@@ -1,29 +1,10 @@
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Play, Ticket } from "lucide-react";
 import heroBg from "@/assets/hero-cinema.jpg";
-
-const useBoleteria = () => {
-  const [abierto, setAbierto] = useState(false);
-
-  useEffect(() => {
-    const check = () => {
-      const now = new Date();
-      const day = now.getDay(); // 0=dom, 1=lun
-      const hour = now.getHours();
-      // Lunes cerrado. Resto abre 18:00 a 00:00
-      setAbierto(day !== 1 && hour >= 18);
-    };
-    check();
-    const interval = setInterval(check, 60000);
-    return () => clearInterval(interval);
-  }, []);
-
-  return abierto;
-};
+import { useBoleteria } from "@/hooks/useBoleteria";
 
 const HeroSection = () => {
-  const boleteriaAbierta = useBoleteria();
+  const { isOpen: boleteriaAbierta } = useBoleteria();
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
