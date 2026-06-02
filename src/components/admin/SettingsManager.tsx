@@ -35,7 +35,8 @@ const SettingsManager = () => {
     try {
       const { error } = await supabase
         .from("settings")
-        .upsert({ id: "global", is_open: checked, updated_at: new Date().toISOString() });
+        .update({ is_open: checked, updated_at: new Date().toISOString() })
+        .eq("id", "global");
 
       if (error) {
         throw error;
