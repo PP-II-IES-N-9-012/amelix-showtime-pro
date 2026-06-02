@@ -56,7 +56,7 @@ export const useBoleteria = () => {
     };
   }, []);
 
-  const isOpen = isManuallyOpen === null ? true : (isManuallyOpen && isScheduleOpen);
+  const isOpen = isManuallyOpen === null ? true : isManuallyOpen;
 
   return { isOpen, isLoading, isManuallyOpen, isScheduleOpen };
 };
