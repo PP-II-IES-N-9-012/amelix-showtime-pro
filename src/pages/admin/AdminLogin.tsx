@@ -5,6 +5,7 @@ import { supabase } from "@/lib/supabase";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import amelixALogo from "@/assets/amelix-a-white.png";
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
@@ -49,9 +50,7 @@ const AdminLogin = () => {
 
       <div className="relative z-10 w-full max-w-md">
         <div className="flex flex-col items-center mb-8">
-           <div className="w-16 h-16 rounded-xl bg-primary text-primary-foreground flex items-center justify-center font-bold text-4xl mb-4 shadow-lg shadow-primary/20">
-             A
-           </div>
+           <img src={amelixALogo} alt="Amelix" className="w-16 h-16 mb-4 object-contain" />
            <h1 className="text-3xl font-heading font-bold uppercase tracking-tight text-center">
              Admin <span className="text-primary">Portal</span>
            </h1>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Navigate, Outlet, Link, useLocation } from "react-router-dom";
 import { LogOut, Film, Megaphone, Settings } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import amelixALogo from "@/assets/amelix-a-white.png";
 
 const AdminLayout = () => {
   const [session, setSession] = useState<any>(null);
@@ -51,9 +52,7 @@ const AdminLayout = () => {
         <div className="p-6 border-b border-border bg-card/50 backdrop-blur-md sticky top-0">
           <Link to="/" className="flex flex-col gap-1 items-start group">
              <div className="flex items-center gap-2">
-                 <div className="w-8 h-8 rounded bg-primary text-primary-foreground flex items-center justify-center font-bold text-xl group-hover:scale-105 transition-transform">
-                   A
-                 </div>
+                 <img src={amelixALogo} alt="Amelix" className="w-8 h-8 group-hover:scale-105 transition-transform object-contain" />
                  <h1 className="font-heading font-bold text-xl uppercase tracking-tighter">
                    Amelix<span className="text-primary font-light">Pro</span>
                  </h1>
@@ -113,9 +112,7 @@ const AdminLayout = () => {
         {/* Mobile Header */}
         <header className="md:hidden flex items-center justify-between p-4 border-b border-border bg-card/80 backdrop-blur-xl sticky top-0 z-30">
            <div className="flex items-center gap-2">
-                 <div className="w-8 h-8 rounded bg-primary text-primary-foreground flex items-center justify-center font-bold text-xl">
-                   A
-                 </div>
+                 <img src={amelixALogo} alt="Amelix" className="w-8 h-8 object-contain" />
                  <h1 className="font-heading font-bold text-xl uppercase tracking-tighter">
                    Amelix
                  </h1>

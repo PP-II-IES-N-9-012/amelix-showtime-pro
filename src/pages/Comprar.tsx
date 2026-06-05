@@ -8,7 +8,7 @@ import {
 import { supabase } from "@/lib/supabase";
 import { getBillboardMovies, MovieWithShowtimes } from "@/services/movieService";
 import { toast } from "sonner";
-import amelixLogo from "@/assets/amelix-logo.png";
+import amelixLogo from "@/assets/cine-amelix-white.png";
 import { useBoleteria } from "@/hooks/useBoleteria";
 
 interface TicketType {
@@ -394,8 +394,8 @@ export default function Comprar() {
       </header>
 
       {/* Main Container */}
-      <main className="flex-1 flex flex-col justify-center items-center py-10 px-4">
-        <div className="max-w-4xl w-full bg-card border border-border shadow-2xl rounded-2xl flex flex-col min-h-[60vh] overflow-hidden">
+      <main className="flex-1 flex flex-col">
+        <div className="flex-1 w-full bg-card flex flex-col overflow-hidden">
           
           {/* Steps Indicator Header */}
           <div className="p-6 border-b border-border bg-black/40 relative">
