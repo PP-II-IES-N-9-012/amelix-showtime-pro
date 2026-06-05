@@ -1,5 +1,5 @@
 import { MapPin, Phone, Clock, Instagram, Facebook } from "lucide-react";
-import amelixLogo from "@/assets/amelix-logo.png";
+import amelixLogo from "@/assets/amelix-white.png";
 
 const FooterSection = () => {
   return (

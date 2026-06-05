@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Menu, X, MapPin } from "lucide-react";
-import amelixLogo from "@/assets/amelix-logo.png";
+import amelixLogo from "@/assets/cine-amelix-white.png";
 import { ModeToggle } from "./ModeToggle";
 
 const Navbar = () => {
