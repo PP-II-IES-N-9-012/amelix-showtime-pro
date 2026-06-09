@@ -10,6 +10,9 @@ const CarteleraSection = () => {
   const [selectedMovie, setSelectedMovie] = useState<MovieWithShowtimes | null>(null);
   const [selectedTrailer, setSelectedTrailer] = useState<string | null>(null);
 
+  const today = new Date();
+  const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+
   useEffect(() => {
     const fetchMovies = async () => {
       setIsLoading(true);
@@ -77,7 +80,9 @@ const CarteleraSection = () => {
           </div>
         ) : (
           <div className="grid grid-cols-2 lg:grid-cols-2 gap-3 sm:gap-6">
-            {movies.map((peli, i) => (
+            {movies.map((peli, i) => {
+              const todayShowtimes = peli.showtimes ? peli.showtimes.filter(st => st.showing_date === todayStr) : [];
+              return (
               <motion.div
                 key={peli.id}
                 initial={{ opacity: 0, y: 30 }}
@@ -161,13 +166,13 @@ const CarteleraSection = () => {
                     
                     <div className="mt-2 sm:mt-0">
                       <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2 font-heading hidden sm:block">
-                        Horarios Disponibles
+                        HORARIOS DE HOY
                       </p>
-                      {peli.showtimes && peli.showtimes.length > 0 ? (
+                      {todayShowtimes.length > 0 ? (
                         <>
                           {/* Desktop schedules */}
                           <div className="hidden sm:flex flex-col gap-2 mt-3">
-                            {peli.showtimes.map((st) => (
+                            {todayShowtimes.map((st) => (
                               <div
                                 key={st.id}
                                 onClick={(e) => e.stopPropagation()}
@@ -190,7 +195,7 @@ const CarteleraSection = () => {
                           
                           {/* Mobile schedules */}
                           <div className="flex sm:hidden flex-wrap gap-1.5 mt-2.5">
-                            {peli.showtimes.map((st) => (
+                            {todayShowtimes.map((st) => (
                               <div
                                 key={st.id}
                                 onClick={(e) => e.stopPropagation()}
@@ -212,7 +217,8 @@ const CarteleraSection = () => {
                   </div>
                 </div>
               </motion.div>
-            ))}
+              );
+            })}
           </div>
         )}
 
