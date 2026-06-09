@@ -16,8 +16,11 @@ const HeroSection = () => {
           width={1920}
           height={1080}
         />
-        <div className="absolute inset-0 bg-background/60 dark:bg-background/20" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
+        {/* Light Mode: slight top and bottom gradients, not stretched */}
+        <div className="absolute inset-0 dark:hidden" style={{ background: 'linear-gradient(to bottom, hsl(var(--background)) 0%, transparent 15%, transparent 85%, hsl(var(--background)) 100%)' }} />
+        {/* Dark Mode: subtle overall dark wash and bottom fade */}
+        <div className="absolute inset-0 hidden dark:block bg-background/20" />
+        <div className="absolute inset-0 hidden dark:block bg-gradient-to-b from-transparent via-transparent to-background" />
       </div>
 
       <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">

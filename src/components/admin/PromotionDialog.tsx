@@ -83,7 +83,7 @@ const PromotionDialog = ({ promotion, isOpen, onClose, onSaved }: PromotionDialo
         ...formData,
         title: `Estreno: ${details.title}`,
         image_url: details.backdrop_url || details.poster_url || "",
-        promo_type: "estreno"
+        promo_type: "proximamente"
       });
       setTmdbResults([]);
       setTmdbQuery("");
@@ -204,8 +204,8 @@ const PromotionDialog = ({ promotion, isOpen, onClose, onSaved }: PromotionDialo
               className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             >
               <option value="general">General / Anuncio</option>
-              <option value="descuento">Descuento Especial</option>
-              <option value="estreno">Próximo Estreno</option>
+              <option value="descuento">Descuento especial</option>
+              <option value="proximamente">Próximamente</option>
             </select>
           </div>
           
