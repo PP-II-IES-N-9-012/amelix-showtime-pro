@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Clock, Star, Calendar, X, Film, Users, PlayCircle, Loader2 } from "lucide-react";
-import { getBillboardMovies, MovieWithShowtimes } from "@/services/movieService";
+import { getBillboardMovies, MovieWithShowtimes, formatShowingDate } from "@/services/movieService";
 import { supabase } from "@/lib/supabase";
 
 const CarteleraSection = () => {
@@ -180,7 +180,8 @@ const CarteleraSection = () => {
                                   <span className="font-heading font-bold text-xl tracking-tight">{st.showing_time?.slice(0, 5)}<span className="text-sm font-normal text-muted-foreground ml-1">hs</span></span>
                                 </div>
                                 <div className="flex flex-col items-end">
-                                  <span className="text-[10px] uppercase font-bold text-primary tracking-widest">{st.language_type}</span>
+                                  <span className="text-xs font-bold text-primary">{formatShowingDate(st.showing_date)}</span>
+                                  <span className="text-[10px] uppercase font-semibold text-muted-foreground mt-0.5">{st.language_type}</span>
                                   <span className="text-xs font-semibold text-muted-foreground mt-0.5">{st.room_name}</span>
                                 </div>
                               </div>
@@ -193,10 +194,13 @@ const CarteleraSection = () => {
                               <div
                                 key={st.id}
                                 onClick={(e) => e.stopPropagation()}
-                                className="bg-muted/40 border border-border px-1.5 py-0.5 rounded flex items-center gap-1 text-[10px]"
+                                className="bg-muted/40 border border-border px-2 py-1 rounded flex flex-col gap-0.5 text-[10px]"
                               >
-                                <Clock className="w-2.5 h-2.5 text-primary" />
-                                <span className="font-bold text-foreground">{st.showing_time?.slice(0, 5)}</span>
+                                <div className="flex items-center gap-1">
+                                  <Clock className="w-2.5 h-2.5 text-primary" />
+                                  <span className="font-bold text-foreground">{st.showing_time?.slice(0, 5)}</span>
+                                </div>
+                                <span className="text-[8px] text-muted-foreground text-center font-medium">{formatShowingDate(st.showing_date)}</span>
                               </div>
                             ))}
                           </div>

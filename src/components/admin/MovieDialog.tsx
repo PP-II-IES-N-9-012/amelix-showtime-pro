@@ -6,8 +6,12 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/lib/supabase";
 import { toast } from "sonner";
-import { Loader2, Search, Film, Plus, Trash2 } from "lucide-react";
+import { Loader2, Search, Film, Plus, Trash2, Calendar as CalendarIcon } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { cn } from "@/lib/utils";
 import { searchTMDBMovies, getTMDBMovieDetails, TMDBMovie } from "@/services/tmdbService";
+import { getCinemaWeekDays, formatShowingDate } from "@/services/movieService";
 
 interface MovieDialogProps {
   movie?: any | null;
@@ -30,19 +34,45 @@ const generateTimes = () => {
 const AVAILABLE_TIMES = generateTimes();
 
 type ShowtimeOption = {
+  showing_date: string;
   showing_time: string;
   language_type: string;
   room_name: string;
 };
 
 const MovieDialog = ({ movie, isOpen, onClose, onSaved }: MovieDialogProps) => {
+  const cinemaDays = getCinemaWeekDays();
+  const fromDate = cinemaDays[0] ? new Date(cinemaDays[0].value + "T00:00:00") : undefined;
+  const toDate = cinemaDays[13] ? new Date(cinemaDays[13].value + "T23:59:59") : undefined;
+
   const [isSaving, setIsSaving] = useState(false);
   const [showtimesList, setShowtimesList] = useState<ShowtimeOption[]>([]);
   const [newShowtime, setNewShowtime] = useState<ShowtimeOption>({
+    showing_date: "",
     showing_time: AVAILABLE_TIMES[0],
     language_type: 'Castellano',
     room_name: 'Sala 1'
   });
+
+  const formatDateValue = (date: Date) => {
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  };
+
+  const handleDateSelect = (date: Date | undefined) => {
+    if (date) {
+      setNewShowtime({
+        ...newShowtime,
+        showing_date: formatDateValue(date)
+      });
+    }
+  };
+
+  const selectedDate = newShowtime.showing_date 
+    ? new Date(newShowtime.showing_date + "T12:00:00")
+    : undefined;
   const [formData, setFormData] = useState({
     title: "",
     overview: "",
@@ -79,8 +109,10 @@ const MovieDialog = ({ movie, isOpen, onClose, onSaved }: MovieDialogProps) => {
         cast_list: movie.cast_list || "",
         status: movie.status || "released"
       });
+      const days = getCinemaWeekDays();
       if (movie.showtimes && Array.isArray(movie.showtimes)) {
         setShowtimesList(movie.showtimes.map((st: any) => ({
+          showing_date: st.showing_date || days[0].value,
           showing_time: st.showing_time,
           language_type: st.language_type || 'Castellano',
           room_name: st.room_name || 'Sala 1'
@@ -88,12 +120,25 @@ const MovieDialog = ({ movie, isOpen, onClose, onSaved }: MovieDialogProps) => {
       } else {
         setShowtimesList([]);
       }
+      setNewShowtime({
+        showing_date: days[0].value,
+        showing_time: AVAILABLE_TIMES[0],
+        language_type: 'Castellano',
+        room_name: 'Sala 1'
+      });
     } else {
       setFormData({
         title: "", overview: "", genres: "", duration_minutes: "", rating: "", classification: "",
         poster_url: "", backdrop_url: "", trailer_url: "", director: "", cast_list: "", status: "released"
       });
       setShowtimesList([]);
+      const days = getCinemaWeekDays();
+      setNewShowtime({
+        showing_date: days[0].value,
+        showing_time: AVAILABLE_TIMES[0],
+        language_type: 'Castellano',
+        room_name: 'Sala 1'
+      });
     }
     setTmdbQuery("");
     setTmdbResults([]);
@@ -186,6 +231,7 @@ const MovieDialog = ({ movie, isOpen, onClose, onSaved }: MovieDialogProps) => {
         if (showtimesList.length > 0) {
           const showtimesData = showtimesList.map(st => ({
             movie_id: currentMovieId,
+            showing_date: st.showing_date,
             showing_time: st.showing_time,
             is_active: true,
             format: '2D',
@@ -330,7 +376,37 @@ const MovieDialog = ({ movie, isOpen, onClose, onSaved }: MovieDialogProps) => {
             <Label className="text-center block">Gestión de Horarios</Label>
             <div className="p-4 bg-muted/30 rounded-lg border border-border space-y-4">
               
-              <div className="flex flex-col sm:flex-row gap-3 items-end">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-3 items-end">
+                <div className="space-y-1.5 md:col-span-2">
+                  <Label className="text-xs">Día de Cartelera</Label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "w-full justify-start text-left font-normal h-10 border-input bg-background focus:ring-2 focus:ring-primary",
+                          !newShowtime.showing_date && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4 text-primary" />
+                        {newShowtime.showing_date ? (
+                          formatShowingDate(newShowtime.showing_date)
+                        ) : (
+                          <span>Seleccionar fecha</span>
+                        )}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={selectedDate}
+                        onSelect={handleDateSelect}
+                        disabled={{ before: fromDate, after: toDate }}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
                 <div className="space-y-1.5 flex-1">
                   <Label className="text-xs">Horario</Label>
                   <select
@@ -369,14 +445,18 @@ const MovieDialog = ({ movie, isOpen, onClose, onSaved }: MovieDialogProps) => {
                 <Button 
                   type="button"
                   onClick={() => {
-                    // Evitar duplicados exactos
-                    if (!showtimesList.some(st => st.showing_time === newShowtime.showing_time && st.room_name === newShowtime.room_name)) {
+                    // Evitar duplicados exactos (Fecha + Hora + Sala)
+                    if (!showtimesList.some(st => 
+                      st.showing_date === newShowtime.showing_date &&
+                      st.showing_time === newShowtime.showing_time && 
+                      st.room_name === newShowtime.room_name
+                    )) {
                       setShowtimesList([...showtimesList, newShowtime]);
                     } else {
-                      toast.error("Este horario ya está asignado en esta sala.");
+                      toast.error("Este horario ya está asignado en esta sala para este día.");
                     }
                   }}
-                  className="shrink-0 gap-2 w-full sm:w-auto"
+                  className="shrink-0 gap-2 w-full md:col-span-1 mt-2 md:mt-0 font-bold"
                 >
                   <Plus className="w-4 h-4" /> Agregar
                 </Button>
@@ -386,8 +466,11 @@ const MovieDialog = ({ movie, isOpen, onClose, onSaved }: MovieDialogProps) => {
                 <div className="mt-4 space-y-2 max-h-40 overflow-y-auto pr-2 custom-scrollbar">
                   {showtimesList.map((st, idx) => (
                     <div key={idx} className="flex items-center justify-between bg-background p-2.5 rounded border border-border">
-                      <div className="flex items-center gap-4 text-sm">
+                      <div className="flex items-center gap-4 text-sm flex-wrap">
                         <span className="font-bold text-primary">{st.showing_time.slice(0, 5)} hs</span>
+                        <span className="text-xs font-semibold px-2 py-0.5 rounded bg-primary/20 text-primary">
+                          {formatShowingDate(st.showing_date)}
+                        </span>
                         <span className="text-muted-foreground uppercase text-xs">{st.language_type}</span>
                         <span className="text-muted-foreground font-medium text-xs">{st.room_name}</span>
                       </div>

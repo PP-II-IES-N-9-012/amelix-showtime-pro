@@ -6,7 +6,7 @@ import {
   Armchair, Candy, Receipt, Loader2, CheckCircle, Plus, Minus, Home 
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
-import { getBillboardMovies, MovieWithShowtimes } from "@/services/movieService";
+import { getBillboardMovies, MovieWithShowtimes, formatShowingDate } from "@/services/movieService";
 import { toast } from "sonner";
 import amelixLogo from "@/assets/cine-amelix-white.png";
 import { useBoleteria } from "@/hooks/useBoleteria";
@@ -331,7 +331,7 @@ export default function Comprar() {
             <div className="py-3 border-b border-dashed border-neutral-800 space-y-1">
               <p className="font-bold text-neutral-200">{selectedMovie?.title}</p>
               <p className="text-[10px] text-neutral-400">Sala: {selectedShowtime?.room_name} ({selectedShowtime?.format})</p>
-              <p className="text-[10px] text-neutral-400">Fecha/Hora: {selectedShowtime?.showing_date} - {selectedShowtime?.showing_time?.slice(0, 5)}hs</p>
+              <p className="text-[10px] text-neutral-400">Fecha/Hora: {formatShowingDate(selectedShowtime?.showing_date)} - {selectedShowtime?.showing_time?.slice(0, 5)}hs</p>
             </div>
 
             <div className="py-3 border-b border-dashed border-neutral-800 space-y-1.5">
@@ -521,7 +521,7 @@ export default function Comprar() {
                                     </div>
                                     <div>
                                       <span className="font-heading font-bold text-lg leading-none block">{st.showing_time?.slice(0, 5)}hs</span>
-                                      <span className="text-[10px] text-muted-foreground mt-0.5 block">{st.showing_date}</span>
+                                      <span className="text-[10px] text-muted-foreground mt-0.5 block">{formatShowingDate(st.showing_date)}</span>
                                     </div>
                                   </div>
                                   <div className="text-right">
@@ -794,7 +794,7 @@ export default function Comprar() {
                           </div>
                           <div>
                             <span className="text-neutral-600 block">FECHA</span>
-                            <span>{selectedShowtime?.showing_date}</span>
+                            <span>{formatShowingDate(selectedShowtime?.showing_date)}</span>
                           </div>
                           <div>
                             <span className="text-neutral-600 block">HORA</span>
