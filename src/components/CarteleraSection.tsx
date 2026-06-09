@@ -175,8 +175,7 @@ const CarteleraSection = () => {
                             {todayShowtimes.map((st) => (
                               <div
                                 key={st.id}
-                                onClick={(e) => e.stopPropagation()}
-                                className="flex items-center justify-between w-full p-3 bg-muted/20 hover:bg-muted/50 rounded-xl border border-border transition-all cursor-default group"
+                                className="flex items-center justify-between w-full p-3 bg-muted/20 hover:bg-muted/50 rounded-xl border border-border transition-all cursor-pointer group"
                               >
                                 <div className="flex items-center gap-3">
                                   <div className="bg-primary/10 text-primary p-2 rounded-lg group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
@@ -198,8 +197,7 @@ const CarteleraSection = () => {
                             {todayShowtimes.map((st) => (
                               <div
                                 key={st.id}
-                                onClick={(e) => e.stopPropagation()}
-                                className="bg-muted/40 border border-border px-2 py-1 rounded flex flex-col gap-0.5 text-[10px]"
+                                className="bg-muted/40 border border-border px-2 py-1 rounded flex flex-col gap-0.5 text-[10px] cursor-pointer"
                               >
                                 <div className="flex items-center gap-1">
                                   <Clock className="w-2.5 h-2.5 text-primary" />
