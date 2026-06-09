@@ -69,9 +69,9 @@ const ProximamenteSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.15 }}
-                className="group relative rounded-xl overflow-hidden bg-card border border-border"
+                className="group relative rounded-xl overflow-hidden bg-card border border-border flex flex-col"
               >
-                <div className="aspect-[2/3] overflow-hidden relative bg-muted">
+                <div className="aspect-[2/3] overflow-hidden relative bg-muted flex-shrink-0">
                   {peli.poster_url ? (
                     <img
                       src={peli.poster_url}
@@ -98,8 +98,7 @@ const ProximamenteSection = () => {
                     </button>
                   )}
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent pointer-events-none" />
-                <div className="absolute bottom-0 left-0 right-0 p-6">
+                <div className="p-6 flex flex-col flex-grow">
                   <div className="flex items-center gap-2 text-accent text-xs font-medium mb-2">
                     <CalendarDays className="h-3.5 w-3.5" />
                     <span className="uppercase tracking-wider">

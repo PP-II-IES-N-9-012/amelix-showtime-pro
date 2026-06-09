@@ -12,12 +12,12 @@ const HeroSection = () => {
         <img
           src={heroBg}
           alt="AMELIX Cinema"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover object-center"
           width={1920}
           height={1080}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/50 to-background" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-transparent to-background/60" />
+        <div className="absolute inset-0 bg-background/60 dark:bg-background/20" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
       </div>
 
       <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
