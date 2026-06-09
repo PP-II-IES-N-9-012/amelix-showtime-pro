@@ -17,7 +17,7 @@ const PromocionesCarouselSection = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const plugin = useRef(
-    Autoplay({ delay: 5000, stopOnInteraction: true })
+    Autoplay({ delay: 10000, stopOnInteraction: false, stopOnMouseEnter: true })
   );
 
   useEffect(() => {
@@ -61,8 +61,6 @@ const PromocionesCarouselSection = () => {
               opts={{ loop: true }}
               plugins={[plugin.current]}
               className="w-full relative shadow-2xl rounded-2xl group"
-              onMouseEnter={plugin.current.stop}
-              onMouseLeave={plugin.current.reset}
             >
               <CarouselContent>
                 {promociones.map((promo) => (
