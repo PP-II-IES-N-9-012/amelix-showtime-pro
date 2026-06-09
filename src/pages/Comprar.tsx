@@ -9,7 +9,6 @@ import { supabase } from "@/lib/supabase";
 import { getBillboardMovies, MovieWithShowtimes, formatShowingDate } from "@/services/movieService";
 import { toast } from "sonner";
 import amelixLogo from "@/assets/cine-amelix-white.png";
-import { useBoleteria } from "@/hooks/useBoleteria";
 
 interface TicketType {
   id: string;
@@ -34,7 +33,6 @@ const COMBOS = [
 export default function Comprar() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { isOpen: boleteriaAbierta, isLoading: isLoadingBoleteria } = useBoleteria();
   
   const queryMovieId = searchParams.get("movieId");
   const queryTicketType = searchParams.get("ticketType");
@@ -271,40 +269,6 @@ export default function Comprar() {
       [id]: Math.max(0, prev[id] + delta)
     }));
   };
-
-  // If loading box office status
-  if (isLoadingBoleteria) {
-    return (
-      <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
-        <Loader2 className="w-12 h-12 animate-spin text-primary mb-4" />
-        <p className="text-muted-foreground uppercase tracking-widest text-sm font-semibold">Cargando...</p>
-      </div>
-    );
-  }
-
-  // If box office is closed manually by admin
-  if (!boleteriaAbierta) {
-    return (
-      <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6 text-center">
-        <div className="max-w-md p-8 bg-card border border-border rounded-2xl shadow-xl flex flex-col items-center">
-          <span className="w-16 h-16 rounded-full bg-destructive/10 text-destructive flex items-center justify-center mb-6">
-            <X className="w-8 h-8" />
-          </span>
-          <h2 className="text-2xl font-bold uppercase tracking-tight text-foreground">Boletería Cerrada</h2>
-          <p className="text-muted-foreground mt-3 text-sm leading-relaxed">
-            El complejo se encuentra cerrado actualmente. No es posible realizar compras online en este momento.
-          </p>
-          <button
-            onClick={() => navigate("/")}
-            className="mt-8 inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-3 rounded-lg font-heading uppercase tracking-wider text-sm font-semibold transition-all glow-red"
-          >
-            <Home className="w-4 h-4" />
-            Volver al Inicio
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   // If checkout succeeded
   if (reservationCode) {

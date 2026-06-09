@@ -65,7 +65,12 @@ const PromocionesCarouselSection = () => {
               <CarouselContent>
                 {promociones.map((promo) => (
                   <CarouselItem key={promo.id}>
-                    <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] md:aspect-[24/9] rounded-2xl overflow-hidden cursor-pointer select-none">
+                    <a
+                      href="/comprar"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="relative block w-full aspect-[16/9] sm:aspect-[21/9] md:aspect-[24/9] rounded-2xl overflow-hidden cursor-pointer select-none"
+                    >
                       <img
                         src={promo.image_url}
                         alt={promo.title}
@@ -90,7 +95,7 @@ const PromocionesCarouselSection = () => {
                           </p>
                         )}
                       </div>
-                    </div>
+                    </a>
                   </CarouselItem>
                 ))}
               </CarouselContent>
