@@ -15,7 +15,7 @@ const MapaSection = () => {
             <span className="text-gradient-gold">Ubicación</span>
           </h2>
           <p className="text-sm uppercase tracking-wider text-muted-foreground">
-            Cómo llegar a AMELIX Cinema
+            Cómo llegar a AMELIX Cine
           </p>
         </motion.div>
 
@@ -35,7 +35,7 @@ const MapaSection = () => {
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Ubicación de AMELIX Cinema en San Rafael, Mendoza"
+                title="Ubicación de AMELIX Cine en San Rafael, Mendoza"
                 className="w-full"
               />
             </div>

@@ -11,7 +11,7 @@ const HeroSection = () => {
       <div className="absolute inset-0">
         <img
           src={heroBg}
-          alt="AMELIX Cinema"
+          alt="AMELIX Cine"
           className="w-full h-full object-cover object-center"
           width={1920}
           height={1080}
@@ -29,12 +29,12 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
+          <p className="text-xl md:text-2xl font-heading uppercase tracking-[0.3em] text-muted-foreground mb-2">
+            Cine
+          </p>
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-heading font-bold uppercase tracking-tight mb-4">
             <span className="text-gradient-gold">AMELIX</span>
           </h1>
-          <p className="text-xl md:text-2xl font-heading uppercase tracking-[0.3em] text-muted-foreground mb-2">
-            Cinema
-          </p>
           <p className="text-base md:text-lg text-muted-foreground mb-6 max-w-lg mx-auto font-light">
             La mejor experiencia cinematográfica de San Rafael, Mendoza
           </p>

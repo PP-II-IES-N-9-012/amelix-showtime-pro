@@ -324,7 +324,7 @@ export default function Comprar() {
           <div className="w-full bg-neutral-950 text-white rounded-xl border border-neutral-800 p-6 my-6 font-mono text-xs uppercase text-left relative">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-accent" />
             <div className="text-center pb-3 border-b border-dashed border-neutral-800">
-              <h4 className="font-bold text-sm tracking-wider text-primary">AMELIX CINEMA</h4>
+              <h4 className="font-bold text-sm tracking-wider text-primary">AMELIX CINE</h4>
               <p className="text-[8px] text-neutral-500 mt-0.5">San Rafael, Mendoza</p>
             </div>
             
@@ -382,7 +382,7 @@ export default function Comprar() {
       {/* Header */}
       <header className="h-20 border-b border-border bg-card/50 backdrop-blur-xl flex items-center justify-between px-6 relative z-10">
         <a href="/" className="flex items-center gap-2">
-          <img src={amelixLogo} alt="AMELIX Cinema" className="h-10 w-auto" />
+          <img src={amelixLogo} alt="AMELIX Cine" className="h-10 w-auto" />
         </a>
         <button
           onClick={() => navigate("/")}
@@ -777,7 +777,7 @@ export default function Comprar() {
                       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-accent" />
                       
                       <div className="text-center pb-4 border-b border-dashed border-neutral-800">
-                        <h4 className="font-bold text-sm tracking-wider text-primary">AMELIX CINEMA</h4>
+                        <h4 className="font-bold text-sm tracking-wider text-primary">AMELIX CINE</h4>
                         <p className="text-[8px] text-neutral-500 mt-0.5">San Rafael, Mendoza</p>
                       </div>
 

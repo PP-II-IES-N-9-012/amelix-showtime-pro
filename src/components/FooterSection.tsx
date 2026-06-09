@@ -7,7 +7,7 @@ const FooterSection = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           <div>
-            <img src={amelixLogo} alt="AMELIX Cinema" className="h-12 w-auto mb-4 dark:invert-0 invert" loading="lazy" />
+            <img src={amelixLogo} alt="AMELIX Cine" className="h-12 w-auto mb-4 dark:invert-0 invert" loading="lazy" />
             <p className="text-sm text-muted-foreground leading-relaxed">
               La mejor experiencia cinematográfica de San Rafael. 
               Tecnología de punta, sonido envolvente y la comodidad que merecés.
@@ -66,7 +66,7 @@ const FooterSection = () => {
 
         <div className="border-t border-border mt-12 pt-8 text-center text-xs text-muted-foreground space-y-2">
           <p className="font-semibold text-foreground/80">⚠️ No se aceptan cambios ni devoluciones una vez retirada la entrada.</p>
-          <p>© 2026 AMELIX Cinema — San Rafael, Mendoza. Todos los derechos reservados.</p>
+          <p>© 2026 AMELIX Cine — San Rafael, Mendoza. Todos los derechos reservados.</p>
         </div>
       </div>
     </footer>

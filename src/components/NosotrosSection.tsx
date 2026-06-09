@@ -13,8 +13,8 @@ const stats = [
 
 const galeria = [
   { src: gallery1, alt: "Sala de cine AMELIX con butacas premium" },
-  { src: gallery2, alt: "Lobby y Candy Bar de AMELIX Cinema" },
-  { src: gallery3, alt: "Fachada exterior de AMELIX Cinema" },
+  { src: gallery2, alt: "Lobby y Candy Bar de AMELIX Cine" },
+  { src: gallery3, alt: "Fachada exterior de AMELIX Cine" },
 ];
 
 const NosotrosSection = () => {
@@ -31,7 +31,7 @@ const NosotrosSection = () => {
             <span className="text-gradient-gold">Nosotros</span>
           </h2>
           <p className="text-sm uppercase tracking-wider text-muted-foreground">
-            Conocé AMELIX Cinema
+            Conocé AMELIX Cine
           </p>
         </motion.div>
 
@@ -45,7 +45,7 @@ const NosotrosSection = () => {
               La mejor experiencia cinematográfica de <span className="text-primary">San Rafael</span>
             </h3>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              Desde hace más de una década, AMELIX Cinema es el punto de encuentro de los amantes del cine en San Rafael, Mendoza. Contamos con 2 salas equipadas con tecnología de última generación, sonido Dolby y las butacas más cómodas de la región.
+              Desde hace más de una década, AMELIX Cine es el punto de encuentro de los amantes del cine en San Rafael, Mendoza. Contamos con 2 salas equipadas con tecnología de última generación, sonido Dolby y las butacas más cómodas de la región.
             </p>
             <p className="text-muted-foreground leading-relaxed mb-8">
               Nuestro compromiso es brindarte una experiencia inolvidable. Desde el momento en que entrás a nuestro lobby hasta que se encienden las luces al final de la película, cada detalle está pensado para que disfrutes al máximo.
@@ -78,7 +78,7 @@ const NosotrosSection = () => {
             <div className="rounded-xl overflow-hidden border border-border glow-red">
               <img
                 src={gallery1}
-                alt="Interior de AMELIX Cinema"
+                alt="Interior de AMELIX Cine"
                 className="w-full h-80 object-cover"
                 loading="lazy"
               />
